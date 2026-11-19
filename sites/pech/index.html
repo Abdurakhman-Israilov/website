@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23d6461f'/><text x='32' y='44' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23fff'>P</text></svg>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pech — wood-fired pizza, delivered in 30 minutes</title>
+<meta name="description" content="Sourdough pizza from a wood-fired oven, delivered across the city in 30 minutes.">
+<style>
+@font-face{font-family:Archivo;font-weight:500;font-display:swap;src:url(../_fonts/archivo-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Archivo;font-weight:800;font-display:swap;src:url(../_fonts/archivo-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:Archivo;font-weight:900;font-display:swap;src:url(../_fonts/archivo-latin-900-normal.woff2) format("woff2")}
+:root{--cream:#fbefdc;--cream-2:#f6e3c6;--paper:#fff8ee;--ink:#231f1c;--muted:#6f6357;--red:#d6461f;--red-2:#b83915;--basil:#5d6b2c;--line:rgba(35,31,28,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:500 16px/1.55 Archivo,system-ui,sans-serif;color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+button,input,select{font:inherit;color:inherit}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(251,239,220,.92);backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
+.hd{display:flex;align-items:center;gap:32px;height:72px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:30px;letter-spacing:-.02em;text-decoration:none}
+.logo i{width:28px;height:28px;border-radius:50%;background:var(--red)}
+nav{display:flex;gap:28px;margin-left:auto}
+nav a{text-decoration:none;font-weight:800;font-size:16px}
+nav a:hover{color:var(--red)}
+.bk{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 18px;border:0;border-radius:8px;background:var(--red);color:#fff;font-weight:800;cursor:pointer}
+.bk b{display:grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:12px;background:#fff;color:var(--red);font-size:13px}
+.bk.pop{animation:pop .4s}
+@keyframes pop{40%{transform:scale(1.12)}}
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;align-items:center;min-height:600px}
+.hero h1{font-weight:900;font-size:clamp(46px,6.4vw,84px);line-height:.98;letter-spacing:-.035em}
+.hero p{margin-top:22px;max-width:26em;font-size:19px;color:var(--muted)}
+.hero .rule{width:64px;height:3px;margin:30px 0;background:var(--basil)}
+.cta{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 28px;border-radius:10px;background:var(--red);color:#fff;font-weight:800;font-size:18px;text-decoration:none;border:0;cursor:pointer;box-shadow:0 6px 0 var(--red-2);transition:transform .15s,box-shadow .15s}
+.cta:active{transform:translateY(4px);box-shadow:0 2px 0 var(--red-2)}
+.badges{display:flex;gap:22px;margin-top:34px;font-size:14px;color:var(--muted)}
+.badges b{display:block;font-size:22px;font-weight:900;color:var(--ink)}
+.stage{position:relative;height:600px}
+.stage::before{content:"";position:absolute;left:12%;right:-30%;top:9%;bottom:-20%;background:var(--red);border-radius:56% 0 0 0/60% 0 0 0}
+.stage img{position:absolute;right:2%;top:54%;width:min(500px,88%);height:auto;transform:translateY(-50%) rotate(0deg);filter:drop-shadow(0 30px 40px rgba(60,20,0,.35));animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(calc(-50% - 10px)) rotate(-2deg)}}
+.leaf{position:absolute;width:46px;height:28px;border-radius:0 100% 0 100%;background:#4e6b2b;box-shadow:inset -6px -4px 0 rgba(0,0,0,.12)}
+/* menu */
+section{padding:96px 0}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:34px;flex-wrap:wrap}
+h2{font-weight:900;font-size:clamp(36px,4.6vw,56px);letter-spacing:-.03em;line-height:1}
+.tabs{display:flex;gap:8px;padding:5px;border:2px solid var(--ink);border-radius:12px;background:var(--paper)}
+.tabs button{height:42px;padding:0 18px;border:0;border-radius:8px;background:none;font-weight:800;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--ink);color:var(--paper)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.item{display:flex;flex-direction:column;padding:22px;border:2px solid var(--ink);border-radius:16px;background:var(--paper);transition:transform .2s,box-shadow .2s}
+.item:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--ink)}
+.item .pic{display:grid;place-items:center;aspect-ratio:4/3;margin-bottom:16px;border-radius:12px;background:var(--cream-2)}
+.item .pic{overflow:hidden}.item .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.item:hover .pic img{transform:scale(1.06)}
+.item .pic .ico{font-size:64px}
+.item h3{font-weight:900;font-size:22px;letter-spacing:-.01em}
+.item p{margin-top:6px;font-size:15px;color:var(--muted);flex:1}
+.row{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
+.price{font-weight:900;font-size:22px;color:var(--red)}
+.add{height:42px;padding:0 18px;border:2px solid var(--ink);border-radius:10px;background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer}
+.add:hover{background:var(--red);border-color:var(--red)}
+.step{display:flex;align-items:center;gap:6px;height:42px;padding:3px;border:2px solid var(--ink);border-radius:10px;background:var(--paper)}
+.step button{width:32px;height:32px;border:0;border-radius:7px;background:var(--cream-2);font-weight:900;font-size:18px;cursor:pointer}
+.step button:hover{background:var(--red);color:#fff}
+.step span{min-width:22px;text-align:center;font-weight:900}
+.item.in-cart{box-shadow:0 0 0 2px var(--red)}
+.open-now{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 12px;border-radius:20px;background:rgba(255,255,255,.18);font-weight:800;font-size:14px}
+.open-now i{width:9px;height:9px;border-radius:50%;background:#9be37a;box-shadow:0 0 0 4px rgba(155,227,122,.25)}
+.open-now.closed i{background:#ffd2c4;box-shadow:none}
+.hours div.today{font-weight:800}
+.summary-lines{display:grid;gap:6px;margin-bottom:16px;padding:14px;border-radius:12px;background:var(--cream-2);font-size:14.5px}
+.summary-lines div{display:flex;justify-content:space-between;gap:10px}
+form.co .err{color:var(--red);font-size:13px;font-weight:800;min-height:1em}
+form.co input[aria-invalid=true]{border-color:var(--red)}
+.mbask{display:none}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.tag{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:6px;background:var(--basil);color:#fff;font-size:12px;vertical-align:4px}
+/* delivery */
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.card{padding:34px;border:2px solid var(--ink);border-radius:18px;background:var(--paper)}
+.card h3{font-weight:900;font-size:26px;letter-spacing:-.02em}
+.card p{margin-top:10px;color:var(--muted)}
+.chk{display:flex;gap:10px;margin-top:22px}
+.chk input{flex:1;min-width:0;height:52px;padding:0 16px;border:2px solid var(--ink);border-radius:10px;background:#fff}
+.chk button{height:52px;padding:0 20px;border:0;border-radius:10px;background:var(--ink);color:var(--paper);font-weight:800;cursor:pointer}
+.res{margin-top:14px;font-weight:800;min-height:1.5em}
+.res.ok{color:var(--basil)}.res.no{color:var(--red)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.steps div{padding:16px;border-radius:12px;background:var(--cream-2)}
+.steps b{display:block;font-size:30px;font-weight:900;color:var(--red)}
+.red{background:var(--red);color:#fff;border-color:var(--red)}
+.red p{color:rgba(255,255,255,.85)}
+.hours{margin-top:20px;display:grid;gap:8px}
+.hours div{display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.3)}
+/* about */
+.about{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+.about p{margin-top:18px;font-size:18px;color:var(--muted)}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.nums div{padding:26px;border:2px solid var(--ink);border-radius:16px;background:var(--paper)}
+.nums b{display:block;font-weight:900;font-size:44px;letter-spacing:-.03em}
+footer{padding:40px 0;border-top:2px solid var(--ink);font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+/* basket drawer */
+.scrim{position:fixed;inset:0;z-index:40;background:rgba(35,31,28,.45);opacity:0;pointer-events:none;transition:opacity .25s}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:41;display:flex;flex-direction:column;width:min(440px,100%);background:var(--paper);border-left:2px solid var(--ink);transform:translateX(102%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.open .scrim{opacity:1;pointer-events:auto}.open .drawer{transform:none}
+body.open{overflow:hidden}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:2px solid var(--ink)}
+.dh h3{font-weight:900;font-size:26px}
+.x{width:42px;height:42px;border:2px solid var(--ink);border-radius:10px;background:none;font-size:20px;cursor:pointer}
+.db{flex:1;overflow:auto;padding:18px 24px}
+.line{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.line img,.line .mini{width:52px;height:52px;border-radius:50%;object-fit:cover;background:var(--cream-2);display:grid;place-items:center;font-size:24px}
+.line b{display:block;font-weight:800}
+.line small{color:var(--muted)}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:32px;height:32px;border:2px solid var(--ink);border-radius:8px;background:none;font-weight:900;cursor:pointer}
+.empty{padding:40px 0;text-align:center;color:var(--muted)}
+.df{padding:20px 24px;border-top:2px solid var(--ink)}
+.bar{height:8px;margin:8px 0 14px;border-radius:4px;background:var(--cream-2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--basil);transition:width .4s}
+.tot{display:grid;gap:4px;margin-bottom:16px;font-size:15px}
+.tot div{display:flex;justify-content:space-between}
+.tot .big{font-weight:900;font-size:20px;margin-top:4px}
+.df .cta{width:100%;justify-content:center}
+.df .cta[disabled]{opacity:.45;pointer-events:none}
+form.co{display:grid;gap:12px}
+form.co label{display:grid;gap:6px;font-weight:800;font-size:14px}
+form.co input,form.co select{height:48px;padding:0 14px;border:2px solid var(--ink);border-radius:10px;background:#fff}
+.done{text-align:center;padding:30px 0}
+.done .big{font-size:64px}
+.done h4{font-weight:900;font-size:26px;margin-top:8px}
+.track{display:flex;justify-content:space-between;margin-top:26px;position:relative}
+.track::before{content:"";position:absolute;left:8%;right:8%;top:15px;height:3px;background:var(--cream-2)}
+.track span{position:relative;display:grid;justify-items:center;gap:6px;font-size:13px;font-weight:800;color:var(--muted)}
+.track span i{width:32px;height:32px;border-radius:50%;background:var(--cream-2);border:3px solid var(--paper)}
+.track span.on{color:var(--ink)}.track span.on i{background:var(--basil)}
+.toast{position:fixed;left:50%;bottom:24px;z-index:50;transform:translate(-50%,calc(100% + 40px));visibility:hidden;padding:14px 20px;border-radius:12px;background:var(--ink);color:var(--paper);font-weight:800;transition:transform .3s}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+@media (max-width:900px){
+  nav{display:none}
+  .bk{margin-left:auto}
+  .hero .wrap{grid-template-columns:1fr;padding-top:40px}
+  .stage{min-height:360px}.stage img{right:50%;transform:translate(50%,-50%);width:340px;animation:none}
+  .grid,.dl,.about{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr 1fr}
+  .mbask{position:fixed;left:12px;right:12px;bottom:12px;z-index:30;display:flex;align-items:center;justify-content:space-between;height:58px;padding:0 20px;border:0;border-radius:14px;background:var(--red);color:#fff;font-weight:900;font-size:17px;box-shadow:0 6px 0 var(--red-2),0 14px 30px rgba(0,0,0,.2);transform:translateY(160%);transition:transform .3s;cursor:pointer}
+  .mbask.show{transform:none}
+  body.open .mbask{transform:translateY(160%)}
+  footer{padding-bottom:96px}
+  .chk button{padding:0 16px}
+  .hd{gap:12px}
+  .dl>*{min-width:0}.card{padding:24px}
+  .steps div{padding:12px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* mobile menu */
+.mnu{display:none;flex:0 0 44px;width:44px;height:44px;margin-left:10px;border:1px solid var(--line);border-radius:10px;background:none;cursor:pointer;place-items:center}
+.mnu i,.mnu i::before,.mnu i::after{display:block;width:18px;height:2px;background:currentColor;transition:transform .25s,opacity .2s}
+.mnu i{position:relative}.mnu i::before,.mnu i::after{content:"";position:absolute;left:0}.mnu i::before{top:-6px}.mnu i::after{top:6px}
+header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{transform:translateY(6px) rotate(45deg)}header.nav-open .mnu i::after{transform:translateY(-6px) rotate(-45deg)}
+:target{scroll-margin-top:90px}section[id],[id]{scroll-margin-top:90px}
+@media (max-width:900px){
+  .mnu{display:grid}
+  header.nav-open nav{display:flex;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;margin:0;padding:6px 22px 14px;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 18px 30px rgba(0,0,0,.08)}
+  header.nav-open nav a{padding:14px 0;font-size:18px;border-bottom:1px solid var(--line)}
+  header.nav-open nav a:last-child{border-bottom:0}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <a class="logo" href="#top"><i></i>PECH</a>
+  <nav id="nav"><a href="#menu">Menu</a><a href="#delivery">Delivery</a><a href="#about">About</a></nav>
+  <button class="bk" id="openBasket" aria-label="Open basket">Basket <b id="count">0</b></button>
+  <button class="mnu" aria-label="Menu" aria-expanded="false" aria-controls="nav"><i></i></button>
+</div></header>
+
+<main id="top">
+<section class="hero" style="padding:0">
+  <div class="wrap">
+    <div>
+      <h1>Hot pizza in 30&nbsp;minutes</h1>
+      <p>Sourdough base, wood-fired oven at 450°C, delivery across the city. If it is late, the next one is on us.</p>
+      <div class="rule"></div>
+      <a class="cta" href="#menu">Start an order →</a>
+      <div class="badges"><div><b>48 h</b>dough rest</div><div><b>90 s</b>in the oven</div><div><b>4.9</b>from 2,300 orders</div></div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <img src="hero.webp" alt="" width="900" height="900">
+      <span class="leaf" style="right:6%;top:12%;transform:rotate(-30deg)"></span>
+      <span class="leaf" style="right:16%;top:6%;transform:rotate(20deg) scale(.8)"></span>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="sh"><h2>Menu</h2>
+      <div class="tabs" role="tablist" aria-label="Menu sections">
+        <button role="tab" aria-selected="true" data-cat="pizza">Pizza</button>
+        <button role="tab" aria-selected="false" data-cat="sides">Sides</button>
+        <button role="tab" aria-selected="false" data-cat="drinks">Drinks</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="delivery" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh"><h2>Delivery</h2></div>
+    <div class="dl">
+      <div class="card">
+        <h3>Do we deliver to you?</h3>
+        <p>Enter your postcode. We cover 9 districts from two ovens.</p>
+        <form class="chk" id="zone"><input id="pc" placeholder="e.g. N1 7GU" aria-label="Postcode" autocomplete="postal-code"><button>Check</button></form>
+        <div class="res" id="zoneRes" role="status"></div>
+        <div class="steps"><div><b>1</b>Order online</div><div><b>2</b>90 s in the oven</div><div><b>3</b>At your door</div></div>
+      </div>
+      <div class="card red">
+        <h3>Opening hours</h3><div class="open-now" id="openNow"><i></i><span>Checking…</span></div>
+        <p>Free delivery on orders over £25. Otherwise £2.50.</p>
+        <div class="hours"><div data-d="1234"><span>Mon–Thu</span><span>12:00–23:00</span></div><div data-d="56"><span>Fri–Sat</span><span>12:00–01:00</span></div><div data-d="0"><span>Sunday</span><span>13:00–22:00</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="padding-top:0">
+  <div class="wrap about">
+    <div><h2>One oven, no shortcuts</h2>
+      <p>We started with a single wood-fired oven and a starter older than the business. Every base rests for 48 hours, every tomato comes from one farm in Campania, and every pizza leaves the oven 90 seconds after it goes in.</p></div>
+    <div class="nums"><div><b>2</b>ovens in the city</div><div><b>28 min</b>average delivery</div><div><b>6</b>pizzas, all sourdough</div><div><b>0</b>frozen ingredients</div></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© Pech pizzeria · 14 Oven Lane</span><span>Concept website by Man’s Service</span></div></footer>
+
+<div id="basket" aria-hidden="true">
+  <div class="scrim" data-close></div>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="bt">
+    <div class="dh"><h3 id="bt">Your order</h3><button class="x" data-close aria-label="Close">×</button></div>
+    <div class="db" id="db"></div>
+    <div class="df" id="df"></div>
+  </aside>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<button class="mbask" id="mbask" aria-label="Open basket"><span>View basket · <b id="mcount">0</b></span><span id="mtotal">£0</span></button>
+
+<script>
+const MENU=[
+ {id:1,cat:"pizza",n:"Margherita",d:"San Marzano tomato, fior di latte, basil, olive oil",p:10,img:"margherita.webp",tag:"Classic"},
+ {id:2,cat:"pizza",n:"Pepperoni",d:"Tomato, mozzarella, spicy pepperoni, oregano",p:12,img:"pepperoni.webp",tag:"Best seller"},
+ {id:3,cat:"pizza",n:"Four cheese",d:"Mozzarella, gorgonzola, parmesan, taleggio, honey",p:13,img:"fourcheese.webp"},
+ {id:4,cat:"pizza",n:"Diavola",d:"Tomato, nduja, chilli, mozzarella, basil",p:13,img:"diavola.webp",tag:"Hot"},
+ {id:5,cat:"pizza",n:"Bianca",d:"Mozzarella, ricotta, garlic, lemon zest, rocket",p:11,img:"bianca.webp"},
+ {id:6,cat:"pizza",n:"Marinara",d:"Tomato, garlic, oregano, olive oil. Vegan",p:9,img:"marinara.webp",tag:"Vegan"},
+ {id:7,cat:"sides",n:"Garlic knots",d:"Six knots, garlic butter, parsley",p:5,img:"knots.webp"},
+ {id:8,cat:"sides",n:"Burrata salad",d:"Burrata, heirloom tomatoes, basil oil",p:8,img:"burrata.webp"},
+ {id:9,cat:"sides",n:"Tiramisu",d:"Made every morning, serves one",p:6,img:"tiramisu.webp"},
+ {id:10,cat:"drinks",n:"Lemon soda",d:"Sicilian lemons, 330 ml",p:3,img:"lemon.webp"},
+ {id:11,cat:"drinks",n:"Aranciata",d:"Sicilian orange soda, 275 ml",p:3,img:"chinotto.webp"},
+ {id:12,cat:"drinks",n:"Still water",d:"500 ml",p:2,img:"water.webp"},
+];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const byId=id=>MENU.find(m=>m.id===id);
+const money=v=>"£"+v.toFixed(2).replace(".00","");
+const ZONE=/^(N|E|EC|WC|NW|SE)\d/;
+const FREE=25, FEE=2.5;
+let cart=new Map(), step="cart", cat="pizza", lastFocus=null;
+try{const saved=JSON.parse(localStorage.getItem("pech-cart")||"[]");cart=new Map(saved.filter(([id])=>byId(id)))}catch(e){}
+const save=()=>{try{localStorage.setItem("pech-cart",JSON.stringify([...cart]))}catch(e){}};
+const count=()=>[...cart.values()].reduce((a,b)=>a+b,0);
+const sub=()=>[...cart].reduce((s,[id,n])=>s+byId(id).p*n,0);
+const fee=s=>s>=FREE||s===0?0:FEE;
+
+function cardCtl(m){const n=cart.get(m.id)||0;
+  return n?`<div class="step" aria-label="${m.n} in basket"><button data-q="-1" data-id="${m.id}" aria-label="Remove one ${m.n}">−</button><span aria-live="polite">${n}</span><button data-q="1" data-id="${m.id}" aria-label="Add one more ${m.n}">+</button></div>`
+           :`<button class="add" data-id="${m.id}">Add +</button>`}
+function render(){
+  $("#grid").innerHTML=MENU.filter(m=>m.cat===cat).map(m=>`<article class="item ${cart.has(m.id)?"in-cart":""}">
+    <div class="pic"><img src="${m.img}" alt="${m.n}" width="960" height="723" loading="lazy"></div>
+    <h3>${m.n}${m.tag?`<span class="tag">${m.tag}</span>`:""}</h3><p>${m.d}</p>
+    <div class="row"><span class="price">${money(m.p)}</span><span class="ctl" data-ctl="${m.id}">${cardCtl(m)}</span></div></article>`).join("");
+}
+function refreshCards(){ $$("[data-ctl]").forEach(el=>{const m=byId(+el.dataset.ctl); el.innerHTML=cardCtl(m); el.closest(".item").classList.toggle("in-cart",cart.has(m.id))}); }
+const tabs=$$(".tabs button");
+tabs.forEach((b,i)=>{b.id="tab-"+b.dataset.cat;b.setAttribute("aria-controls","grid");b.tabIndex=i?-1:0;
+  b.onclick=()=>select(b);
+  b.onkeydown=e=>{const d=e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0;if(!d)return;e.preventDefault();const n=tabs[(i+d+tabs.length)%tabs.length];select(n);n.focus()}});
+function select(b){tabs.forEach(x=>{x.setAttribute("aria-selected",x===b);x.tabIndex=x===b?0:-1});cat=b.dataset.cat;$("#grid").setAttribute("aria-labelledby",b.id);render()}
+$("#grid").setAttribute("role","tabpanel"); render();
+
+document.addEventListener("click",e=>{
+  const a=e.target.closest(".add"); if(a){ change(+a.dataset.id,1,true); return }
+  const q=e.target.closest("[data-q]"); if(q){ change(+q.dataset.id,+q.dataset.q,false); return }
+  if(e.target.closest("[data-close]")) close();
+});
+function change(id,d,announce){
+  const n=(cart.get(id)||0)+d; n>0?cart.set(id,n):cart.delete(id); save(); update();
+  if(d>0){const b=$("#openBasket"); b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop");}
+  if(announce) toast(byId(id).n+" added · "+money(sub()));
+}
+function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove("show"),1800); }
+function update(){
+  const c=count(), s=sub();
+  $("#count").textContent=c; $("#mcount").textContent=c; $("#mtotal").textContent=money(s+fee(s));
+  $("#mbask").classList.toggle("show",c>0);
+  refreshCards();
+  if(step==="cart") drawCart();
+  if(step==="form" && !c){step="cart";drawCart()}
+}
+function drawCart(){
+  const s=sub(), f=fee(s);
+  $("#db").innerHTML=cart.size?[...cart].map(([id,n])=>{const m=byId(id);return `<div class="line"><img src="${m.img}" alt=""><div><b>${m.n}</b><small>${n} × ${money(m.p)} = ${money(n*m.p)}</small></div><div class="qty"><button data-q="-1" data-id="${id}" aria-label="Remove one ${m.n}">−</button><span>${n}</span><button data-q="1" data-id="${id}" aria-label="Add one ${m.n}">+</button></div></div>`}).join("")
+    :`<p class="empty">Your basket is empty.<br>Pick a pizza from the menu.</p><button class="cta" style="margin:0 auto;display:flex" data-close onclick="document.getElementById('menu').scrollIntoView()">Browse the menu</button>`;
+  const left=Math.max(0,FREE-s);
+  $("#df").innerHTML=cart.size?`<small>${left?`Add ${money(left)} more for free delivery`:"Free delivery unlocked"}</small><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${FREE}" aria-valuenow="${Math.min(FREE,s)}"><i style="width:${Math.min(100,s/FREE*100)}%"></i></div>
+    <div class="tot"><div><span>Subtotal</span><span>${money(s)}</span></div><div><span>Delivery</span><span>${f?money(f):"Free"}</span></div><div class="big"><span>Total</span><span>${money(s+f)}</span></div></div>
+    <button class="cta" id="go">Checkout →</button>`:"";
+  const g=$("#go"); if(g) g.onclick=checkout;
+}
+function checkout(){
+  step="form"; const s=sub();
+  const pc=$("#pc").value.trim().toUpperCase();
+  $("#db").innerHTML=`<div class="summary-lines">${[...cart].map(([id,n])=>`<div><span>${n} × ${byId(id).n}</span><span>${money(n*byId(id).p)}</span></div>`).join("")}<div><span>Delivery</span><span>${fee(s)?money(fee(s)):"Free"}</span></div></div>
+   <form class="co" id="co" novalidate>
+    <label>Name<input name="name" required autocomplete="name"></label>
+    <label>Phone<input name="tel" required type="tel" inputmode="tel" autocomplete="tel" pattern="[0-9+ ]{7,}" placeholder="+44 7700 900000"></label>
+    <label>Street address<input name="addr" required autocomplete="street-address"></label>
+    <label>Postcode<input name="pc" required autocomplete="postal-code" value="${pc}" placeholder="e.g. N1 7GU"></label>
+    <label>Delivery time<select name="when"><option>As soon as possible (~30 min)</option><option>In 1 hour</option><option>In 2 hours</option></select></label>
+    <label>Payment<select name="pay"><option>Card on delivery</option><option>Cash</option></select></label>
+    <p class="err" id="coErr" role="alert"></p></form>`;
+  $("#df").innerHTML=`<div class="tot"><div class="big"><span>To pay</span><span>${money(s+fee(s))}</span></div></div><button class="cta" id="place">Place order · ${money(s+fee(s))}</button><button class="x" style="width:100%;margin-top:10px;font-size:15px;font-weight:800" id="back">Back to basket</button>`;
+  $("#back").onclick=()=>{step="cart";drawCart()};
+  $("#place").onclick=()=>{
+    const f=$("#co"), err=$("#coErr"); let bad=null;
+    [...f.elements].forEach(i=>{if(!i.willValidate)return;const ok=i.checkValidity();i.setAttribute("aria-invalid",!ok);if(!ok&&!bad)bad=i});
+    if(bad){err.textContent=bad.name==="tel"?"Enter a phone number we can call.":"Fill in your "+(bad.closest("label").firstChild.textContent.toLowerCase())+".";bad.focus();return}
+    if(!ZONE.test(f.pc.value.trim().toUpperCase())){f.pc.setAttribute("aria-invalid",true);err.textContent=`We do not deliver to ${f.pc.value.trim().toUpperCase()} yet. Covered: N, E, EC, WC, NW and SE.`;f.pc.focus();return}
+    confirmOrder(f.name.value.split(" ")[0], f.when.value);
+  };
+  $("#co input").focus();
+}
+function confirmOrder(name,when){
+  step="done"; const no=Math.floor(1000+Math.random()*8999); const asap=when.startsWith("As soon");
+  $("#db").innerHTML=`<div class="done"><div class="big" aria-hidden="true">🍕</div><h4>Thanks ${name}, order #${no} is in</h4><p style="color:var(--muted);margin-top:6px">${asap?`Arriving in about <b id="eta">30</b> min.`:`Delivery ${when.toLowerCase()}.`} This is a demo, no order was placed.</p>
+   <div class="track"><span class="on"><i></i>Accepted</span><span id="t2"><i></i>In the oven</span><span id="t3"><i></i>On the way</span></div></div>`;
+  $("#df").innerHTML=`<button class="cta" id="again">Start a new order</button>`;
+  if(asap){setTimeout(()=>$("#t2")?.classList.add("on"),1200); setTimeout(()=>{$("#t3")?.classList.add("on"); const e=$("#eta"); if(e) e.textContent="22";},3200);}
+  $("#again").onclick=()=>{step="cart";update();close();};
+  cart.clear(); save(); update();
+}
+function open(){ lastFocus=document.activeElement; $("#basket").classList.add("open"); document.body.classList.add("open"); $("#basket").setAttribute("aria-hidden","false"); if(step==="done")step="cart"; if(step==="cart")drawCart(); setTimeout(()=>$(".drawer .x").focus(),60); }
+function close(){ if(!document.body.classList.contains("open"))return; document.body.classList.remove("open"); $("#basket").classList.remove("open"); $("#basket").setAttribute("aria-hidden","true"); lastFocus?.focus?.(); }
+$("#openBasket").onclick=open; $("#mbask").onclick=open;
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")close();
+  if(e.key==="Tab"&&document.body.classList.contains("open")){const f=[...$(".drawer").querySelectorAll("button,input,select,a[href]")].filter(x=>!x.disabled&&x.offsetParent);if(!f.length)return;const a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+});
+$("#zone").onsubmit=e=>{e.preventDefault(); const v=$("#pc").value.trim().toUpperCase(), r=$("#zoneRes");
+  if(!v){r.className="res no";r.textContent="Enter a postcode first.";$("#pc").focus();return}
+  const ok=ZONE.test(v); r.className="res "+(ok?"ok":"no");
+  r.textContent=ok?`Yes, we deliver to ${v}. Usually 25–30 min.`:`Not yet in ${v}. We are opening a third oven in spring.`;};
+(function hours(){
+  const H={0:[13,22],1:[12,23],2:[12,23],3:[12,23],4:[12,23],5:[12,25],6:[12,25]};
+  const d=new Date(), w=d.getDay(), t=d.getHours()+d.getMinutes()/60;
+  const prev=H[(w+6)%7], late=prev[1]>24&&t<prev[1]-24;
+  const [o,c]=H[w], isOpen=late||(t>=o&&t<c);
+  const el=$("#openNow"); el.classList.toggle("closed",!isOpen);
+  el.querySelector("span").textContent=isOpen?`Open now · until ${String((late?prev[1]:c)%24).padStart(2,"0")}:00`:(t<o?`Closed · opens today at ${o}:00`:`Closed · opens tomorrow at ${H[(w+1)%7][0]}:00`);
+  $$(".hours [data-d]").forEach(r=>r.classList.toggle("today",r.dataset.d.includes(w)));
+})();
+update();
+
+(()=>{const h=document.querySelector("header"),m=document.querySelector(".mnu");if(!m)return;
+const set=o=>{h.classList.toggle("nav-open",o);m.setAttribute("aria-expanded",o)};
+m.onclick=()=>set(!h.classList.contains("nav-open"));
+document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>set(false)));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")set(false)});
+document.addEventListener("click",e=>{if(!h.contains(e.target))set(false)});})();
+</script>
+</body>
+</html>

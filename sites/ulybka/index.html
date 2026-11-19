@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232bb3a0'/><text x='32' y='44' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23fff'>U</text></svg>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ulybka dental clinic — book in three taps</title>
+<meta name="description" content="Check-ups, cleaning, fillings and implants. Book a visit in three taps.">
+<style>
+@font-face{font-family:Manrope;font-weight:300 800;font-display:swap;src:url(../_fonts/manrope-latin-wght-normal.woff2) format("woff2")}
+:root{--bg:#f3f8f7;--card:#fff;--ink:#10302c;--soft:#557470;--mint:#2bb3a0;--mint-d:#1d8f80;--mint-l:#dff3ef;--sun:#ffcf5c;--line:rgba(16,48,44,.1);--r:20px}
+*{box-sizing:border-box;margin:0;padding:0}
+img{display:block;max-width:100%;height:auto}
+html{scroll-behavior:smooth}
+body{font:500 16px/1.55 Manrope,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+header{position:sticky;top:0;z-index:20;background:rgba(243,248,247,.9);backdrop-filter:blur(10px)}
+.hd{display:flex;align-items:center;gap:20px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:21px;text-decoration:none;letter-spacing:-.01em}
+.logo svg{width:34px;height:34px}
+nav{display:flex;gap:24px;margin-left:auto;font-size:15px;font-weight:600}
+nav a{text-decoration:none;color:var(--soft)}
+.call{margin-left:12px;font-weight:800;text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:54px;padding:0 26px;border:0;border-radius:27px;background:var(--mint);color:#fff;font-weight:800;font-size:16px;text-decoration:none;cursor:pointer;transition:background .2s,transform .15s}
+.btn:hover{background:var(--mint-d)}.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 440px;gap:48px;align-items:start;padding:46px 0 20px}
+h1{font-weight:800;font-size:clamp(40px,5.6vw,68px);line-height:1.02;letter-spacing:-.035em}
+h1 span{color:var(--mint)}
+.hero p.l{margin-top:20px;font-size:19px;color:var(--soft);max-width:25em}
+.trust{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.trust span{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:14px;background:var(--card);font-size:14px;font-weight:700}
+.trust b{color:var(--mint-d)}
+.smile{margin-top:34px;height:260px;border-radius:var(--r);background:var(--mint-l);position:relative;overflow:hidden}
+.smile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.smile::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,48,44,.72),rgba(16,48,44,0) 62%)}
+.smile svg{position:absolute;right:20px;bottom:-10px;width:260px}
+.smile p{position:absolute;z-index:1;left:26px;bottom:24px;font-weight:800;font-size:20px;line-height:1.25;max-width:12em;color:#fff}
+/* booking widget */
+.book{position:sticky;top:86px;padding:24px;border-radius:26px;background:var(--card);box-shadow:0 20px 50px rgba(16,48,44,.1)}
+.book h2{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.prog{display:flex;gap:6px;margin:14px 0 20px}
+.prog i{flex:1;height:5px;border-radius:3px;background:var(--mint-l)}
+.prog i.on{background:var(--mint)}
+.lbl{font-size:13px;font-weight:800;color:var(--soft);margin-bottom:10px;text-transform:none}
+.opts{display:grid;gap:8px}
+.opt{display:flex;justify-content:space-between;align-items:center;width:100%;padding:14px 16px;border:2px solid var(--line);border-radius:14px;background:none;cursor:pointer;text-align:left}
+.opt small{display:block;color:var(--soft);font-weight:600}
+.opt b{white-space:nowrap}
+.opt[aria-pressed=true]{border-color:var(--mint);background:var(--mint-l)}
+.daysel{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.daysel button,.times button{padding:10px 0;border:2px solid var(--line);border-radius:12px;background:none;cursor:pointer;font-weight:800;text-align:center}
+.daysel button small{display:block;font-size:11.5px;color:var(--soft);font-weight:700}
+.daysel button[aria-pressed=true],.times button[aria-pressed=true]{border-color:var(--mint);background:var(--mint);color:#fff}
+.daysel button[aria-pressed=true] small{color:#e8fffb}
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:16px}
+.docs-pick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.docs-pick button{height:36px;padding:0 12px;border:2px solid var(--line);border-radius:18px;background:none;font-weight:700;font-size:13.5px;cursor:pointer}
+.docs-pick button[aria-pressed=true]{border-color:var(--mint);background:var(--mint-l)}
+.opt:disabled{opacity:.45;cursor:default}
+.note{font-size:13px;color:var(--soft);margin:-4px 0 12px}
+.none{grid-column:1/-1;padding:14px;border-radius:12px;background:var(--mint-l);font-size:14px;font-weight:700;color:var(--mint-d)}
+.field .err{color:#c0392b;font-size:13px;min-height:1em}
+.field input[aria-invalid=true]{border-color:#e07a6b}
+.book h2:focus{outline:none}
+.nav .back{white-space:nowrap;font-size:15px;padding:0 12px}
+.book{scroll-margin-top:84px}
+:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+.times button:disabled{opacity:.3;text-decoration:line-through;cursor:default}
+.nav{display:flex;gap:10px;margin-top:20px}
+.nav .btn{flex:1}
+.back{height:54px;padding:0 18px;border:2px solid var(--line);border-radius:27px;background:none;cursor:pointer;font-weight:800}
+.field{display:grid;gap:6px;margin-bottom:12px;font-size:13px;font-weight:800;color:var(--soft)}
+.field input{height:52px;padding:0 16px;border:2px solid var(--line);border-radius:14px;background:#fff;font-size:17px;color:var(--ink)}
+.field input:focus{outline:none;border-color:var(--mint)}
+.summary{padding:14px 16px;border-radius:14px;background:var(--mint-l);font-size:15px;margin-bottom:16px}
+.summary b{display:block}
+.sms{margin-top:18px;padding:16px;border-radius:18px 18px 18px 4px;background:#e9eef0;font-size:14.5px;max-width:90%;animation:in .5s both .4s}
+.sms small{display:block;color:var(--soft);font-weight:700;margin-bottom:4px}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.done{text-align:center}
+.done .ck{width:74px;height:74px;margin:6px auto 14px;border-radius:50%;background:var(--mint);display:grid;place-items:center}
+.done .ck svg{width:36px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:40;stroke-dashoffset:40;animation:ck .6s .1s forwards}
+@keyframes ck{to{stroke-dashoffset:0}}
+/* sections */
+section{padding:90px 0 0}
+h2.s{font-weight:800;font-size:clamp(32px,4vw,48px);letter-spacing:-.03em;line-height:1.05;margin-bottom:28px}
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.svc article{padding:24px;border-radius:var(--r);background:var(--card)}
+.svc .ic{width:48px;height:48px;border-radius:14px;background:var(--mint-l);display:grid;place-items:center}
+.svc .ic svg{width:26px;height:26px;fill:none;stroke:var(--mint-d);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.svc h3{margin-top:16px;font-size:19px;font-weight:800}
+.svc p{margin-top:6px;color:var(--soft);font-size:15px}
+.svc article{display:flex;flex-direction:column}.svc p{flex:1}
+.svc .pr{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;font-weight:800;color:var(--mint-d)}
+.sbk{height:40px;padding:0 16px;border:2px solid var(--mint);border-radius:20px;background:none;color:var(--mint-d);font-weight:800;cursor:pointer}
+.sbk:hover{background:var(--mint);color:#fff}
+.docs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.doc{border-radius:var(--r);background:var(--card);overflow:hidden}
+.doc>div:last-child{padding:18px 22px 22px}
+.doc .dbk{margin-top:12px;height:40px;padding:0 16px;border:2px solid var(--mint);border-radius:20px;background:none;color:var(--mint-d);font-weight:800;cursor:pointer}
+.doc .dbk:hover{background:var(--mint);color:#fff}
+.doc .pt{display:block;width:100%;aspect-ratio:1;object-fit:cover;object-position:50% 25%;background:var(--mint-l)}
+.doc h3{font-size:17px;font-weight:800}
+.doc p{font-size:14px;color:var(--soft)}
+.rev{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rev blockquote{padding:24px;border-radius:var(--r);background:var(--card);font-size:15.5px}
+.rev .st{color:#f0b429;letter-spacing:2px}
+.rev cite{display:block;margin-top:12px;font-style:normal;font-weight:800;font-size:14px;color:var(--soft)}
+.where{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.where > div{padding:28px;border-radius:var(--r);background:var(--card)}
+.map{min-height:280px;border-radius:var(--r);overflow:hidden;background:#e8f1ee}
+.map svg{display:block;width:100%;height:100%}
+.hrs{display:grid;gap:8px;margin-top:14px}
+.hrs div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:8px}
+footer{margin-top:90px;padding:36px 0 110px;font-size:14px;color:var(--soft);border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.mbar{display:none}
+@media (max-width:960px){
+  nav,.call{display:none}
+  .hd .mnu{margin-left:auto}
+  .hero{grid-template-columns:1fr;gap:26px;padding-top:24px}
+  .book{position:static}
+  .svc,.docs,.rev,.where{grid-template-columns:1fr}
+  .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:30;gap:10px;padding:10px;border-radius:32px;background:var(--ink);box-shadow:0 12px 30px rgba(0,0,0,.25);transition:transform .3s}
+  .mbar a{flex:1}
+  .mbar .ph{flex:0 0 54px;padding:0;background:#28524c}
+  .mbar.hide{transform:translateY(140%)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.done .ck svg{stroke-dashoffset:0}}
+
+/* mobile menu */
+.mnu{display:none;flex:0 0 44px;width:44px;height:44px;margin-left:10px;border:1px solid var(--line);border-radius:10px;background:none;cursor:pointer;place-items:center}
+.mnu i,.mnu i::before,.mnu i::after{display:block;width:18px;height:2px;background:currentColor;transition:transform .25s,opacity .2s}
+.mnu i{position:relative}.mnu i::before,.mnu i::after{content:"";position:absolute;left:0}.mnu i::before{top:-6px}.mnu i::after{top:6px}
+header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{transform:translateY(6px) rotate(45deg)}header.nav-open .mnu i::after{transform:translateY(-6px) rotate(-45deg)}
+:target{scroll-margin-top:90px}section[id],[id]{scroll-margin-top:90px}
+@media (max-width:960px){
+  .mnu{display:grid}
+  header.nav-open nav{display:flex;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;margin:0;padding:6px 22px 14px;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 18px 30px rgba(0,0,0,.08)}
+  header.nav-open nav a{padding:14px 0;font-size:18px;border-bottom:1px solid var(--line)}
+  header.nav-open nav a:last-child{border-bottom:0}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <a class="logo" href="#top"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="12" fill="#2bb3a0"/><path d="M11 18c2 8 16 8 18 0" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round"/></svg>Ulybka</a>
+  <nav id="nav"><a href="#services">Services and prices</a><a href="#doctors">Doctors</a><a href="#where">Address</a></nav>
+  <a class="call" href="tel:+440000000000">+44 20 0000 0000</a>
+  <button class="mnu" aria-label="Menu" aria-expanded="false" aria-controls="nav"><i></i></button>
+</div></header>
+
+<main id="top" class="wrap">
+  <div class="hero">
+    <div>
+      <h1>See a dentist <span>this week.</span> Book in three taps.</h1>
+      <p class="l">Check-ups, cleaning, fillings and implants in one clinic. Pick a service, a day and a time. We confirm by SMS within a minute.</p>
+      <div class="trust"><span><b>4.9 ★</b> 1,180 reviews</span><span><b>Pain-free</b> treatment</span><span><b>Fixed</b> prices</span><span><b>Open</b> until 21:00</span></div>
+      <div class="smile"><p>Free consultation for new patients this month</p>
+        <img src="clinic.webp" alt="A bright treatment room at the clinic" width="1600" height="900"></div>
+    </div>
+    <aside class="book" id="book" aria-label="Book a visit"></aside>
+  </div>
+
+  <section id="services">
+    <h2 class="s">Services and prices</h2>
+    <div class="svc">
+      <article><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4c-2 0-3.5 1.6-3.5 4 0 3 1.4 4.4 1.9 7.5.4 2.6.8 4.5 2 4.5 1.4 0 1.4-4 3-4h1.2c1.6 0 1.6 4 3 4 1.2 0 1.6-1.9 2-4.5.5-3.1 1.9-4.5 1.9-7.5 0-2.4-1.5-4-3.5-4-1.9 0-2.6 1-4 1S8.9 4 7 4z"/></svg></div><h3>Check-up and X-ray</h3><p>Full exam, digital X-ray and a written treatment plan.</p><div class="pr"><span>£45</span><button class="sbk" data-s="0">Book</button></div></article>
+      <article><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 1.8 1.8.7-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/></svg></div><h3>Hygiene and cleaning</h3><p>Scale, polish and Air-Flow. 45 minutes with a hygienist.</p><div class="pr"><span>£70</span><button class="sbk" data-s="1">Book</button></div></article>
+      <article><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4c-2 0-3.5 1.6-3.5 4 0 3 1.4 4.4 1.9 7.5.4 2.6.8 4.5 2 4.5 1.4 0 1.4-4 3-4h1.2c1.6 0 1.6 4 3 4 1.2 0 1.6-1.9 2-4.5.5-3.1 1.9-4.5 1.9-7.5 0-2.4-1.5-4-3.5-4-1.9 0-2.6 1-4 1S8.9 4 7 4z"/><circle cx="12" cy="9.5" r="2"/></svg></div><h3>Fillings</h3><p>Tooth-coloured composite. Same-day, under local anaesthetic.</p><div class="pr"><span>from £90</span><button class="sbk" data-s="2">Book</button></div></article>
+      <article><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8l-1 4H9z"/><path d="M9.5 7h5l-.6 13h-3.8z"/><path d="M9.3 10.5h5.4M9.2 14h5.6M9 17.5h6"/></svg></div><h3>Implants</h3><p>Titanium implant with a crown. Fixed price, 5-year guarantee.</p><div class="pr"><span>from £1,650</span><button class="sbk" data-s="3">Book</button></div></article>
+      <article><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M7.5 13h9a4.5 4.5 0 0 1-9 0z"/><path d="M9 9.5h.01M15 9.5h.01"/></svg></div><h3>Whitening</h3><p>In-clinic whitening, up to eight shades in one visit.</p><div class="pr"><span>£290</span><button class="sbk" data-s="4">Book</button></div></article>
+      <article><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21c.8-4 3.6-6 7-6s6.2 2 7 6"/><path d="M10.5 8.5h.01M13.5 8.5h.01"/></svg></div><h3>Children</h3><p>Gentle first visits for kids from age three.</p><div class="pr"><span>£35</span><button class="sbk" data-s="5">Book</button></div></article>
+    </div>
+  </section>
+
+  <section id="doctors">
+    <h2 class="s">Doctors</h2>
+    <div class="docs">
+      <div class="doc"><img class="pt" src="d1.webp" alt="Portrait of Dr Anna Kovacs" width="600" height="600" loading="lazy"><div><h3>Dr Anna Kovacs</h3><p>General dentist · 14 years</p><button class="dbk" data-doc="0">Book with Anna</button></div></div>
+      <div class="doc"><img class="pt" src="d2.webp" alt="Portrait of Dr Tom Becker" width="600" height="600" loading="lazy"><div><h3>Dr Tom Becker</h3><p>Implants and surgery · 11 years</p><button class="dbk" data-doc="1">Book with Tom</button></div></div>
+      <div class="doc"><img class="pt" src="d3.webp" alt="Portrait of Lena Moss" width="600" height="600" loading="lazy"><div><h3>Lena Moss</h3><p>Hygienist · 8 years</p><button class="dbk" data-doc="2">Book with Lena</button></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="s">What patients say</h2>
+    <div class="rev">
+      <blockquote><div class="st">★★★★★</div>Booked on my phone during lunch, seen the same evening. Nothing hurt, and I knew the price before they started.<cite>Patient review, filling</cite></blockquote>
+      <blockquote><div class="st">★★★★★</div>I have been scared of dentists for years. Dr Kovacs explained every step. I came back for the cleaning a week later.<cite>Patient review, check-up</cite></blockquote>
+      <blockquote><div class="st">★★★★★</div>The SMS reminder the day before saved me. Rescheduling took one tap.<cite>Patient review, hygiene</cite></blockquote>
+    </div>
+  </section>
+
+  <section id="where">
+    <h2 class="s">Find us</h2>
+    <div class="where">
+      <div class="map" role="img" aria-label="Map: the clinic at 7 Garden Row, two minutes from Central metro"><svg viewBox="0 0 600 340" preserveAspectRatio="xMidYMid slice"><rect width="600" height="340" fill="#e9f0ec"/><path d="M-10 250c90-30 160 10 250-10s170-70 370-40v150H-10z" fill="#cfe6f0"/><rect x="380" y="30" width="170" height="110" rx="14" fill="#d4ebd7"/><g stroke="#fff" stroke-linecap="round" fill="none"><path d="M-10 120H620" stroke-width="18"/><path d="M200-10V360" stroke-width="18"/><path d="M-10 40L360 200" stroke-width="10"/><path d="M330-10v220" stroke-width="10"/><path d="M90 170h240" stroke-width="8"/></g><g fill="#fff" stroke="#d7e3de"><rect x="40" y="10" width="120" height="80" rx="6"/><rect x="230" y="20" width="80" height="80" rx="6"/><rect x="230" y="140" width="80" height="60" rx="6"/><rect x="40" y="180" width="130" height="50" rx="6"/><rect x="380" y="160" width="90" height="50" rx="6"/></g><text x="465" y="92" font-family="Manrope" font-size="13" fill="#4f7a5a" text-anchor="middle">Garden Park</text><text x="470" y="300" font-family="Manrope" font-size="13" fill="#4d7d93" text-anchor="middle" font-style="italic">River</text><text x="40" y="112" font-family="Manrope" font-size="11" fill="#7a948f">MAIN STREET</text><g transform="translate(200 120)"><circle r="15" fill="#10302c"/><text y="5" font-family="Manrope" font-weight="800" font-size="14" fill="#fff" text-anchor="middle">M</text></g><text x="222" y="104" font-family="Manrope" font-size="12" font-weight="700" fill="#10302c">Central</text><path d="M200 120 L270 120 L270 160" stroke="#2bb3a0" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round" fill="none"/><g transform="translate(270 172)"><circle r="26" fill="#2bb3a0" opacity=".18"/><path d="M0 0c-10-12-15-19-15-26a15 15 0 0 1 30 0c0 7-5 14-15 26z" fill="#2bb3a0" transform="translate(0 -6)"/><circle cy="-32" r="5.5" fill="#fff"/></g><g transform="translate(300 216)"><rect width="150" height="40" rx="10" fill="#fff" stroke="#d7e3de"/><text x="14" y="17" font-family="Manrope" font-size="12" font-weight="800" fill="#10302c">Ulybka clinic</text><text x="14" y="32" font-family="Manrope" font-size="11" fill="#557470">2 min walk from metro</text></g></svg></div>
+      <div><h3 style="font-size:22px;font-weight:800">7 Garden Row, 2nd floor</h3><p style="color:var(--soft)">Two minutes from the Central metro station. Lift and step-free access.</p>
+        <div class="hrs"><div><span>Mon–Fri</span><b>08:00–21:00</b></div><div><span>Saturday</span><b>09:00–17:00</b></div><div><span>Sunday</span><b>Emergency only</b></div></div></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Ulybka dental clinic</span><span>Concept website by Man’s Service. The clinic and reviews are invented.</span></div></footer>
+<div class="mbar" id="mbar"><a class="btn" href="#book">Book a visit</a><a class="btn ph" href="tel:+440000000000" aria-label="Call the clinic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></a></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const SV=[["Check-up and X-ray","30 min","£45"],["Hygiene and cleaning","45 min","£70"],["Filling","60 min","from £90"],["Implant consultation","30 min","Free"],["Whitening","60 min","£290"],["Children’s check-up","30 min","£35"]];
+const DOC=[{n:"Dr Anna Kovacs",s:[0,2,4,5]},{n:"Dr Tom Becker",s:[0,2,3]},{n:"Lena Moss",s:[1,4]}];
+const TIMES=["09:00","10:00","11:30","13:00","14:30","16:00","17:30","19:00"];
+const st={step:0,svc:null,day:0,time:null,doc:null,name:"",tel:""};
+const now=new Date();
+const mins=t=>+t.slice(0,2)*60+ +t.slice(3);
+const days=(()=>{const out=[];const d=new Date();d.setHours(0,0,0,0);
+  while(out.length<6){const w=d.getDay(), last=w===6?16*60:19*60;
+    const todayOver=out.length===0&&d.toDateString()===now.toDateString()&&now.getHours()*60+now.getMinutes()>last-30;
+    if(w!==0&&!todayOver)out.push(new Date(d)); d.setDate(d.getDate()+1);}
+  return out})();
+const fmt=(d,o)=>d.toLocaleDateString("en-GB",o);
+const docsFor=i=>DOC.map((d,k)=>({...d,k})).filter(d=>d.s.includes(i));
+function slotFree(di,ti){const d=days[di], t=TIMES[ti];
+  if(d.getDay()===6&&mins(t)>16*60)return false;
+  if(d.toDateString()===now.toDateString()&&mins(t)<=now.getHours()*60+now.getMinutes()+30)return false;
+  const docs=st.doc!=null?[st.doc]:docsFor(st.svc).map(x=>x.k);
+  return docs.some(k=>((d.getDate()*3+ti*5+k*2)%7)>=2);
+}
+let interacted=false;
+function render(){
+  const b=$("#book"), prog=`<div class="prog" aria-hidden="true">${[0,1,2].map(i=>`<i class="${i<=st.step?"on":""}"></i>`).join("")}</div>`;
+  const docNote=st.doc!=null?`<p class="note">With ${DOC[st.doc].n} · <a href="#" id="anyDoc">any doctor</a></p>`:"";
+  if(st.step===0){
+    b.innerHTML=`<h2 tabindex="-1">Book a visit</h2>${prog}${docNote}<p class="lbl">1. What do you need?</p><div class="opts">${SV.map((s,i)=>{const off=st.doc!=null&&!DOC[st.doc].s.includes(i);return `<button class="opt" aria-pressed="${st.svc===i}" data-s="${i}" ${off?"disabled":""}><span>${s[0]}<small>${off?"Not with "+DOC[st.doc].n.replace("Dr ",""):s[1]}</small></span><b>${s[2]}</b></button>`}).join("")}</div>`;
+    $$(".opt").forEach(o=>o.onclick=()=>{st.svc=+o.dataset.s;st.time=null;st.step=1;go()});
+  } else if(st.step===1){
+    const ds=docsFor(st.svc);
+    if(st.doc!=null&&!ds.some(d=>d.k===st.doc))st.doc=null;
+    const anyFree=TIMES.some((t,i)=>slotFree(st.day,i));
+    b.innerHTML=`<h2 tabindex="-1">${SV[st.svc][0]}</h2>${prog}<p class="lbl">2. Doctor, day and time</p>
+     <div class="docs-pick" role="group" aria-label="Doctor"><button aria-pressed="${st.doc==null}" data-k="">Any available</button>${ds.map(d=>`<button aria-pressed="${st.doc===d.k}" data-k="${d.k}">${d.n.replace("Dr ","")}</button>`).join("")}</div>
+     <div class="daysel" role="group" aria-label="Day" style="grid-template-columns:repeat(${days.length},1fr)">${days.map((d,i)=>`<button aria-pressed="${st.day===i}" data-d="${i}" aria-label="${fmt(d,{weekday:"long",day:"numeric",month:"long"})}"><small>${d.toDateString()===now.toDateString()?"Today":fmt(d,{weekday:"short"})}</small>${d.getDate()}</button>`).join("")}</div>
+     <div class="times" role="group" aria-label="Time">${anyFree?TIMES.map((t,i)=>{const ok=slotFree(st.day,i);return `<button aria-pressed="${st.time===t}" data-t="${t}" ${ok?"":"disabled"} aria-label="${t}${ok?"":" (taken)"}">${t}</button>`}).join(""):`<p class="none">No free times on this day. Try the next day.</p>`}</div>
+     <div class="nav"><button class="back" id="bk">Back</button><button class="btn" id="nx" ${st.time?"":"disabled"}>Continue</button></div>`;
+    $$(".docs-pick button").forEach(x=>x.onclick=()=>{st.doc=x.dataset.k===""?null:+x.dataset.k;if(st.time&&!slotFree(st.day,TIMES.indexOf(st.time)))st.time=null;render()});
+    $$(".daysel button").forEach(x=>x.onclick=()=>{st.day=+x.dataset.d;st.time=null;render();$(`.daysel [data-d="${st.day}"]`).focus()});
+    $$(".times button").forEach(x=>x.onclick=()=>{st.time=x.dataset.t;render();$("#nx").focus()});
+    $("#bk").onclick=()=>{st.step=0;go()}; $("#nx").onclick=()=>{st.step=2;go()};
+  } else if(st.step===2){
+    const d=fmt(days[st.day],{weekday:"long",day:"numeric",month:"long"});
+    const who=st.doc!=null?DOC[st.doc].n:docsFor(st.svc)[0].n;
+    b.innerHTML=`<h2 tabindex="-1">Almost done</h2>${prog}<div class="summary"><b>${SV[st.svc][0]} · ${SV[st.svc][2]}</b>${d}, ${st.time}<br><span style="color:var(--soft)">${st.doc!=null?"With ":"Likely with "}${who}</span></div>
+     <form id="f" novalidate><label class="field">Your name<input name="n" required autocomplete="name" value="${st.name}"><span class="err" id="eN"></span></label><label class="field">Mobile for the SMS<input name="t" required type="tel" inputmode="tel" autocomplete="tel" placeholder="+44 7700 900000" value="${st.tel}"><span class="err" id="eT"></span></label>
+     <div class="nav"><button type="button" class="back" id="bk">Back</button><button class="btn">Confirm booking</button></div></form>`;
+    $("#bk").onclick=()=>{st.step=1;go()};
+    $("#f").onsubmit=e=>{e.preventDefault();const F=e.target;
+      const nOk=F.n.value.trim().length>1, tOk=F.t.value.replace(/\D/g,"").length>=7;
+      F.n.setAttribute("aria-invalid",!nOk);F.t.setAttribute("aria-invalid",!tOk);
+      $("#eN").textContent=nOk?"":"Enter your name.";$("#eT").textContent=tOk?"":"Enter a mobile number with at least 7 digits.";
+      if(!nOk){F.n.focus();return} if(!tOk){F.t.focus();return}
+      st.name=F.n.value.trim();st.tel=F.t.value.trim();st.step=3;go()};
+  } else {
+    const d=fmt(days[st.day],{weekday:"short",day:"numeric",month:"short"});
+    const first=st.name.split(" ")[0]||"there";
+    b.innerHTML=`<div class="done"><div class="ck"><svg viewBox="0 0 36 36"><path d="M9 19l6 6 12-13"/></svg></div><h2 tabindex="-1">You are booked</h2><p style="color:var(--soft)">${SV[st.svc][0]} · ${d} · ${st.time}</p></div>
+     <div class="sms"><small>SMS to ${st.tel}</small>Hi ${first}, see you ${d} at ${st.time}, 7 Garden Row, 2nd floor. Reply 1 to confirm, 2 to reschedule.</div>
+     <p style="font-size:13px;color:var(--soft);margin-top:14px">This is a demo. No booking was made and no SMS was sent.</p>
+     <div class="nav"><button class="back" id="ics" style="flex:1">Add to calendar</button><button class="back" id="again" style="flex:1">Book another</button></div>`;
+    $("#again").onclick=()=>{Object.assign(st,{step:0,svc:null,day:0,time:null,doc:null});go()};
+    $("#ics").onclick=()=>{const dd=days[st.day],[h,m]=st.time.split(":").map(Number);const s0=new Date(dd);s0.setHours(h,m);const e0=new Date(s0.getTime()+parseInt(SV[st.svc][1])*60000);
+      const z=x=>x.toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+      const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Ulybka//Demo//EN","BEGIN:VEVENT","UID:"+Date.now()+"@ulybka.demo","DTSTAMP:"+z(new Date()),"DTSTART:"+z(s0),"DTEND:"+z(e0),"SUMMARY:"+SV[st.svc][0]+" at Ulybka","LOCATION:7 Garden Row\\, 2nd floor","END:VEVENT","END:VCALENDAR"].join("\r\n");
+      const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));a.download="ulybka-visit.ics";document.body.appendChild(a);a.click();a.remove()};
+  }
+  const any=$("#anyDoc"); if(any) any.onclick=e=>{e.preventDefault();st.doc=null;render()};
+  if(interacted){const h=b.querySelector("h2");h&&h.focus({preventScroll:true})}
+}
+function go(){interacted=true;render()}
+function jump(){const b=$("#book");const r=b.getBoundingClientRect();if(r.top<70||r.top>innerHeight*.6)b.scrollIntoView({behavior:"smooth",block:"start"})}
+$$(".sbk").forEach(x=>x.onclick=()=>{st.svc=+x.dataset.s;if(st.doc!=null&&!DOC[st.doc].s.includes(st.svc))st.doc=null;st.time=null;st.step=1;go();jump()});
+$$(".dbk").forEach(x=>x.onclick=()=>{st.doc=+x.dataset.doc;if(st.svc!=null&&DOC[st.doc].s.includes(st.svc)){st.step=1}else{st.svc=null;st.step=0}st.time=null;go();jump()});
+render();
+const mb=$("#mbar"); new IntersectionObserver(e=>mb.classList.toggle("hide",e[0].isIntersecting)).observe($("#book"));
+
+(()=>{const h=document.querySelector("header"),m=document.querySelector(".mnu");if(!m)return;
+const set=o=>{h.classList.toggle("nav-open",o);m.setAttribute("aria-expanded",o)};
+m.onclick=()=>set(!h.classList.contains("nav-open"));
+document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>set(false)));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")set(false)});
+document.addEventListener("click",e=>{if(!h.contains(e.target))set(false)});})();
+</script>
+</body>
+</html>

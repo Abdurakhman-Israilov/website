@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23161616'/><text x='32' y='44' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23f4f2ee'>F</text></svg>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forma — architecture bureau</title>
+<meta name="description" content="Forma designs private houses, apartments and small public buildings.">
+<style>
+@font-face{font-family:"Instrument Serif";font-weight:400;font-display:swap;src:url(../_fonts/instrument-serif-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;src:url(../_fonts/instrument-serif-latin-400-italic.woff2) format("woff2")}
+@font-face{font-family:"Instrument Sans";font-weight:400 700;font-display:swap;src:url(../_fonts/instrument-sans-latin-wght-normal.woff2) format("woff2")}
+:root{--bg:#f4f2ee;--paper:#fbfaf8;--ink:#161616;--soft:#6a6862;--line:rgba(22,22,22,.12);--stone:#d9d3c7;--oak:#c9a77c;--sky:#c7d1d6;--moss:#8c9a7e}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/1.6 "Instrument Sans",system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+header{position:sticky;top:0;z-index:20;background:rgba(244,242,238,.88);backdrop-filter:blur(10px)}
+.hd{display:flex;align-items:center;height:76px;gap:40px;border-bottom:1px solid var(--line)}
+.logo{font:400 30px/1 "Instrument Serif",serif;letter-spacing:.01em;text-decoration:none}
+nav{display:flex;gap:30px;margin-left:auto;font-size:15px}
+nav a{text-decoration:none;color:var(--soft)}nav a:hover{color:var(--ink)}
+.link{font-size:15px;font-weight:600;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:end;padding:90px 0 60px}
+h1{font:400 clamp(54px,7.4vw,112px)/.95 "Instrument Serif",serif;letter-spacing:-.02em}
+h1 em{color:var(--soft)}
+.hero p{max-width:28em;margin-top:28px;font-size:18px;color:var(--soft)}
+.hero .acts{display:flex;gap:26px;align-items:center;margin-top:34px}
+.btn{display:inline-flex;align-items:center;height:52px;padding:0 26px;border:0;border-radius:26px;background:var(--ink);color:var(--paper);font-weight:600;text-decoration:none;cursor:pointer}
+.btn:hover{background:#333}
+.draw{background:var(--paper);border:1px solid var(--line);aspect-ratio:1.15;position:relative}
+.draw svg{width:100%;height:100%}
+.draw svg path,.draw svg line,.draw svg rect,.draw svg polyline{fill:none;stroke:var(--ink);stroke-width:1.1;vector-effect:non-scaling-stroke}
+.draw .ink{stroke-dasharray:var(--l);stroke-dashoffset:var(--l);animation:ink 3.2s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes ink{to{stroke-dashoffset:0}}
+.draw .lbl{position:absolute;left:18px;bottom:14px;font-size:12px;letter-spacing:.12em;color:var(--soft)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);margin-top:20px}
+.facts div{padding:22px 0}
+.facts b{display:block;font:400 46px/1 "Instrument Serif",serif}
+.facts span{font-size:14px;color:var(--soft)}
+section{padding:120px 0 0}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:34px}
+h2{font:400 clamp(42px,5vw,72px)/1 "Instrument Serif",serif;letter-spacing:-.015em}
+.fl{display:flex;gap:6px;flex-wrap:wrap}
+.fl button{height:38px;padding:0 16px;border:1px solid var(--line);border-radius:19px;background:none;cursor:pointer;font-size:14px}
+.fl button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.projects{display:grid;grid-template-columns:repeat(12,1fr);gap:28px 24px}
+.pr{grid-column:span 4;cursor:pointer;background:none;border:0;text-align:left}
+.pr.w{grid-column:span 8}
+.pr .vis{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--c)}
+.pr.w .vis{aspect-ratio:auto;height:calc(100% - 64px);min-height:300px}
+.pr .vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.pr svg{position:absolute;inset:0;width:100%;height:100%;background:var(--c);opacity:0;transition:opacity .45s}
+.pr:hover .vis img{transform:scale(1.04)}
+.pr:hover svg,.pr:focus-visible svg{opacity:.94}
+.pr .vis::after{content:"See the drawing";position:absolute;left:14px;bottom:14px;padding:6px 12px;background:var(--paper);font-size:13px;opacity:0;transition:opacity .3s}
+.pr:hover .vis::after{opacity:1}
+.dg .vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pr svg *,.dg .vis svg *{fill:none;stroke:var(--ink);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.pr .meta{display:flex;justify-content:space-between;gap:12px;margin-top:14px}
+.pr h3{font:400 26px/1.15 "Instrument Serif",serif}
+.pr small{font-size:14px;color:var(--soft);white-space:nowrap}
+.pr[hidden]{display:none}
+.projects.flt .pr,.projects.flt .pr.w{grid-column:span 6}
+.projects.flt .pr .vis,.projects.flt .pr.w .vis{height:auto;min-height:0;aspect-ratio:4/3}
+.count{font-size:14px;color:var(--soft);margin:-18px 0 22px}
+input[type=range]{height:28px;cursor:pointer}
+.err{color:#f0a58f;font-size:13px;min-height:1em;letter-spacing:0}
+input[aria-invalid=true]{border-color:#f0a58f!important}
+.sent-sum{margin-top:18px;color:#b8b5ad;font-size:15px}
+.dg .nav{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.dg .nav button{height:44px;padding:0 18px;border:1px solid var(--line);border-radius:22px;background:none;cursor:pointer;font-size:14px}
+.dg .nav button:hover{border-color:var(--ink)}
+.dg .nav .btn{border:0;background:var(--ink);color:var(--paper)}
+.dg .tag{font-size:13px;color:var(--soft);margin-bottom:6px}
+.plan{background:var(--c)}
+.plan svg *{fill:none;stroke:var(--ink);stroke-width:1.2;vector-effect:non-scaling-stroke}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
+.steps div{padding:26px 24px 0 0}
+.steps i{font:italic 400 22px "Instrument Serif",serif;color:var(--soft)}
+.steps h3{margin-top:8px;font:400 30px/1.1 "Instrument Serif",serif}
+.steps p{margin-top:10px;font-size:15px;color:var(--soft)}
+/* enquiry */
+.enq{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;padding:64px;background:var(--ink);color:var(--paper)}
+.enq h2 em{color:#9c9a94}
+.enq p{color:#b8b5ad;margin-top:18px;max-width:26em}
+form{display:grid;gap:18px}
+label{display:grid;gap:8px;font-size:13px;letter-spacing:.06em;color:#b8b5ad}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choices button{height:40px;padding:0 16px;border:1px solid rgba(255,255,255,.25);border-radius:20px;background:none;color:var(--paper);cursor:pointer}
+.choices button[aria-pressed=true]{background:var(--paper);color:var(--ink)}
+input[type=text],input[type=email],textarea{padding:12px 0;border:0;border-bottom:1px solid rgba(255,255,255,.3);background:none;color:var(--paper);font-size:17px}
+input:focus,textarea:focus{outline:none;border-color:var(--paper)}
+input[type=range]{accent-color:var(--oak)}
+.rv{display:flex;justify-content:space-between;font-size:15px;color:var(--paper)}
+.enq .btn{background:var(--paper);color:var(--ink);justify-self:start}
+.sent{font:400 34px/1.2 "Instrument Serif",serif}
+footer{padding:50px 0;font-size:14px;color:var(--soft)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:26px}
+/* project dialog */
+dialog{width:min(1100px,calc(100% - 32px));max-height:calc(100% - 32px);padding:0;border:0;background:var(--paper);color:var(--ink)}
+dialog::backdrop{background:rgba(22,22,22,.6)}
+.dg{display:grid;grid-template-columns:1.3fr 1fr}
+.dg .vis{position:relative;min-height:520px;background:var(--c)}
+.dg .vis svg{position:absolute;inset:0;width:100%;height:100%}
+.dg .tx{padding:40px}
+.dg h3{font:400 46px/1 "Instrument Serif",serif}
+.dg dl{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;margin:26px 0;font-size:15px}
+.dg dt{color:var(--soft)}
+.dg p{color:var(--soft)}
+.dg .x{position:absolute;right:14px;top:14px;width:44px;height:44px;border-radius:50%;border:0;background:var(--paper);cursor:pointer;font-size:22px;z-index:2}
+.plan{margin-top:24px;border:1px solid var(--line);aspect-ratio:1.6}
+.plan svg{width:100%;height:100%}
+.plan rect,.plan line,.plan path{fill:none;stroke:var(--ink);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .9s,transform .9s}
+.reveal.in{opacity:1;transform:none}
+@media (max-width:960px){
+  .wrap{padding:0 22px}
+  nav{display:none}
+  .hd .link{margin-left:auto}
+  .hd{gap:12px}
+  .projects.flt .pr,.projects.flt .pr.w{grid-column:1/-1}
+  .dg .tx{padding:26px}
+  .dg h3{font-size:36px}
+  .hero,.enq,.dg{grid-template-columns:1fr}
+  .enq{padding:34px 24px}
+  .pr,.pr.w{grid-column:1/-1}
+  .pr.w .vis{height:auto;aspect-ratio:4/3;min-height:0}
+  .facts,.steps{grid-template-columns:1fr 1fr}
+  .dg .vis{min-height:300px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.draw .ink{stroke-dashoffset:0}.reveal{opacity:1;transform:none}}
+
+/* mobile menu */
+.mnu{display:none;flex:0 0 44px;width:44px;height:44px;margin-left:10px;border:1px solid var(--line);border-radius:10px;background:none;cursor:pointer;place-items:center}
+.mnu i,.mnu i::before,.mnu i::after{display:block;width:18px;height:2px;background:currentColor;transition:transform .25s,opacity .2s}
+.mnu i{position:relative}.mnu i::before,.mnu i::after{content:"";position:absolute;left:0}.mnu i::before{top:-6px}.mnu i::after{top:6px}
+header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{transform:translateY(6px) rotate(45deg)}header.nav-open .mnu i::after{transform:translateY(-6px) rotate(-45deg)}
+:target{scroll-margin-top:90px}section[id],[id]{scroll-margin-top:90px}
+@media (max-width:960px){
+  .mnu{display:grid}
+  header.nav-open nav{display:flex;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;margin:0;padding:6px 22px 14px;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 18px 30px rgba(0,0,0,.08)}
+  header.nav-open nav a{padding:14px 0;font-size:18px;border-bottom:1px solid var(--line)}
+  header.nav-open nav a:last-child{border-bottom:0}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+  <a class="logo" href="#top">Forma</a>
+  <nav id="nav"><a href="#projects">Projects</a><a href="#process">Process</a><a href="#enquiry">Enquiry</a></nav>
+  <a class="link" href="#enquiry">Discuss a project</a>
+  <button class="mnu" aria-label="Menu" aria-expanded="false" aria-controls="nav"><i></i></button>
+</div></header>
+
+<main id="top" class="wrap">
+  <div class="hero">
+    <div>
+      <h1>Houses that are quiet <em>outside</em> and generous inside.</h1>
+      <p>Forma is a bureau of seven architects. We design private houses, apartments and small public buildings, and stay on the project until the keys are handed over.</p>
+      <div class="acts"><a class="btn" href="#enquiry">Tell us about your site</a><a class="link" href="#projects">See projects</a></div>
+    </div>
+    <div class="draw" id="hero"><span class="lbl">LAKE HOUSE · SOUTH ELEVATION · 1:100</span></div>
+  </div>
+  <div class="facts">
+    <div><b>64</b><span>buildings completed</span></div><div><b>11</b><span>years of practice</span></div><div><b>7</b><span>architects</span></div><div><b>3</b><span>national awards</span></div>
+  </div>
+
+  <section id="projects">
+    <div class="sh"><h2>Selected projects</h2>
+      <div class="fl"><button aria-pressed="true" data-f="all">All</button><button aria-pressed="false" data-f="house">Houses</button><button aria-pressed="false" data-f="interior">Interiors</button><button aria-pressed="false" data-f="public">Public</button></div>
+    </div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <div class="projects" id="grid"></div>
+  </section>
+
+  <section id="process">
+    <div class="sh"><h2>How we work</h2></div>
+    <div class="steps">
+      <div class="reveal"><i>01</i><h3>Site visit</h3><p>We walk the site with you, study light, slope and views. Free, within 150 km.</p></div>
+      <div class="reveal"><i>02</i><h3>Concept</h3><p>Three options as drawings and a model in four weeks. You choose one direction.</p></div>
+      <div class="reveal"><i>03</i><h3>Working drawings</h3><p>Full documentation for permits and builders, with a fixed fee agreed upfront.</p></div>
+      <div class="reveal"><i>04</i><h3>On site</h3><p>Weekly visits during construction until the keys are handed over.</p></div>
+    </div>
+  </section>
+
+  <section id="enquiry">
+    <div class="enq">
+      <div><h2>Start with your <em>site</em>.</h2><p>Tell us what you want to build. We answer within two working days with a first idea of scope, fee and timing.</p></div>
+      <form id="form" novalidate>
+        <label>PROJECT TYPE<div class="choices" id="type" role="group" aria-label="Project type"><button type="button" aria-pressed="true">House</button><button type="button" aria-pressed="false">Apartment</button><button type="button" aria-pressed="false">Renovation</button><button type="button" aria-pressed="false">Public building</button></div></label>
+        <label>FLOOR AREA<input type="range" min="40" max="800" step="10" value="220" id="area"><span class="rv"><span id="areaV">220 m²</span><span>approximate</span></span></label>
+        <label>NAME<input type="text" name="name" required autocomplete="name"><span class="err" id="eName"></span></label>
+        <label>EMAIL<input type="email" name="email" required autocomplete="email"><span class="err" id="eMail"></span></label>
+        <label>ABOUT THE SITE<textarea name="about" rows="3" placeholder="Location, size, what is there now"></textarea></label>
+        <button class="btn">Send enquiry</button>
+      </form>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Forma architecture bureau · 5 Mill Street</span><span>Concept website by Man’s Service. The bureau is invented.</span></div></footer>
+
+<dialog id="dlg"></dialog>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+/* line drawings, generated from a few parameters */
+function house(o){
+  const {w=520,roof="flat",win=[],ground=330,h=150,x=90,stilt=false,extra=""}=o;
+  let s=`<line class="ink" x1="20" y1="${ground}" x2="680" y2="${ground}"/>`;
+  const top=ground-h-(stilt?30:0);
+  s+=`<rect class="ink" x="${x}" y="${top}" width="${w}" height="${h}"/>`;
+  if(roof==="pitch") s+=`<polyline class="ink" points="${x-14},${top} ${x+w/2},${top-90} ${x+w+14},${top}"/>`;
+  if(roof==="mono") s+=`<polyline class="ink" points="${x-10},${top} ${x+w+20},${top-60} ${x+w+20},${top}"/>`;
+  if(roof==="flat") s+=`<line class="ink" x1="${x-30}" y1="${top}" x2="${x+w+30}" y2="${top}"/>`;
+  if(stilt) for(let i=0;i<5;i++){const px=x+30+i*(w-60)/4; s+=`<line class="ink" x1="${px}" y1="${top+h}" x2="${px}" y2="${ground}"/>`}
+  win.forEach(([a,b,c,d])=>s+=`<rect class="ink" x="${x+a}" y="${top+b}" width="${c}" height="${d}"/>`);
+  return s+extra;
+}
+const tree=(x,g,s=1)=>`<line class="ink" x1="${x}" y1="${g}" x2="${x}" y2="${g-60*s}"/><path class="ink" d="M${x-30*s},${g-50*s} q${30*s},-${80*s} ${60*s},0 q-${30*s},${18*s} -${60*s},0z"/>`;
+const svg=(inner,vb="0 0 700 420")=>`<svg viewBox="${vb}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${inner}</svg>`;
+const P=[
+ {k:"lake",t:"Lake house",c:"var(--stone)",cat:"house",y:2025,a:"240 m²",loc:"Lake shore, 60 km north",w:true,d:"A long, low house set back from the water, with a covered terrace that runs the full length of the living room.",
+  g:house({w:520,h:130,roof:"flat",win:[[30,30,120,70],[170,30,200,100],[390,30,90,70]],extra:tree(640,330,1.1)+tree(50,330,.8)})},
+ {k:"city",t:"City apartment",c:"var(--sky)",cat:"interior",y:2024,a:"118 m²",loc:"Old town, 4th floor",d:"Walls taken down to one oak-lined core with storage, kitchen and bathroom inside it.",
+  g:`<rect class="ink" x="150" y="60" width="400" height="300"/><rect class="ink" x="280" y="140" width="140" height="140"/><line class="ink" x1="150" y1="210" x2="280" y2="210"/><line class="ink" x1="420" y1="210" x2="550" y2="210"/><line class="ink" x1="350" y1="60" x2="350" y2="140"/>`},
+ {k:"studio",t:"Country studio",c:"var(--oak)",cat:"house",y:2023,a:"86 m²",loc:"Meadow plot, 90 km east",d:"A painter’s studio with one north-facing roof light and a sleeping loft.",
+  g:house({x:200,w:300,h:150,roof:"pitch",win:[[40,60,60,90],[200,60,60,90]],extra:tree(110,330,.9)+tree(600,330,1.2)})},
+ {k:"forest",w:true,t:"House on stilts",c:"var(--stone)",cat:"house",y:2022,a:"150 m²",loc:"Pine forest, slope",d:"Raised above a steep slope so no trees had to be cut. The deck faces the morning sun.",
+  g:house({x:140,w:420,h:120,roof:"flat",stilt:true,win:[[30,30,160,60],[230,30,160,60]],extra:tree(70,330,1.3)+tree(630,330,1)})},
+ {k:"loft",w:true,t:"Printworks loft",c:"var(--sky)",cat:"interior",y:2023,a:"210 m²",loc:"Former printworks",d:"An open loft kept industrial, with a glass box for the bedrooms in the middle.",
+  g:`<rect class="ink" x="100" y="70" width="500" height="280"/><rect class="ink" x="240" y="150" width="220" height="120"/><line class="ink" x1="100" y1="120" x2="600" y2="120"/><line class="ink" x1="350" y1="150" x2="350" y2="270"/>`},
+
+ {k:"lib",t:"Village library",c:"var(--moss)",cat:"public",y:2024,a:"420 m²",loc:"Village square",d:"A reading room under a single monopitch roof, with a porch that doubles as an outdoor stage.",
+  g:house({x:110,w:460,h:140,roof:"mono",win:[[30,40,80,100],[140,40,80,100],[250,40,80,100],[360,40,70,100]]})},
+];
+function drawHero(){ $("#hero").insertAdjacentHTML("afterbegin",svg(P[0].g)); $$("#hero .ink").forEach((el,i)=>{const l=Math.ceil(el.getTotalLength?el.getTotalLength():800);el.style.setProperty("--l",l);el.style.animationDelay=i*0.12+"s"}); }
+drawHero();
+const TYPE={house:"House",interior:"Apartment",public:"Public building"};
+$("#grid").innerHTML=P.map((p,i)=>`<button class="pr reveal ${p.w?"w":""}" data-i="${i}" data-cat="${p.cat}" style="--c:${p.c}" aria-label="${p.t}, ${p.loc}, ${p.y}. Open project"><div class="vis"><img src="${p.k}.webp" alt="" width="1600" height="1200" loading="lazy">${svg(p.g.replaceAll('class="ink"',''))}</div><div class="meta"><h3>${p.t}</h3><small>${p.loc.split(",")[0]} · ${p.y}</small></div></button>`).join("");
+const setCount=n=>$("#count").textContent=`${n} ${n===1?"project":"projects"}`;
+setCount(P.length);
+$$(".fl button").forEach(b=>b.onclick=()=>{$$(".fl button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  const all=b.dataset.f==="all"; $("#grid").classList.toggle("flt",!all);
+  let n=0; $$(".pr").forEach(p=>{const show=all||p.dataset.cat===b.dataset.f; p.hidden=!show; if(show){n++;p.classList.add("in")}}); setCount(n)});
+let cur=0, opener=null;
+const visible=()=>$$(".pr").filter(p=>!p.hidden).map(p=>+p.dataset.i);
+function show(i){
+  cur=i; const p=P[i], list=visible(), pos=list.indexOf(i);
+  $("#dlg").setAttribute("aria-label",p.t);
+  $("#dlg").innerHTML=`<div class="dg"><div class="vis" style="--c:${p.c}"><button class="x" aria-label="Close">×</button><img src="${p.k}.webp" alt="${p.t}, photo"></div><div class="tx"><p class="tag">${pos+1} / ${list.length} · ${TYPE[p.cat]==="Apartment"?"Interior":TYPE[p.cat]}</p><h3>${p.t}</h3>
+   <dl><dt>Location</dt><dd>${p.loc}</dd><dt>Area</dt><dd>${p.a}</dd><dt>Completed</dt><dd>${p.y}</dd><dt>Team</dt><dd>3 architects</dd></dl><p>${p.d}</p>
+   <div class="plan" style="--c:${p.c}" aria-label="Elevation drawing" role="img">${svg(p.g.replaceAll('class="ink"',''))}</div>
+   <div class="nav"><button id="pv" aria-label="Previous project">← Previous</button><button id="nx" aria-label="Next project">Next →</button><button class="btn" id="sim">Discuss a similar project</button></div></div></div>`;
+  $("#dlg .x").onclick=()=>$("#dlg").close();
+  $("#pv").onclick=()=>step(-1); $("#nx").onclick=()=>step(1);
+  $("#sim").onclick=()=>{const t=TYPE[p.cat]; $$("#type button").forEach(x=>x.setAttribute("aria-pressed",x.textContent===t));
+    const ar=parseInt(p.a); $("#area").value=Math.round(ar/10)*10; $("#areaV").textContent=$("#area").value+" m²";
+    const ta=$("#form [name=about]"); if(ta&&!ta.value) ta.value=`Something like your ${p.t.toLowerCase()}. `;
+    $("#dlg").close(); document.getElementById("enquiry").scrollIntoView({behavior:"smooth"}); setTimeout(()=>$("#form [name=name]").focus({preventScroll:true}),500)};
+}
+function step(d){const l=visible(); show(l[(l.indexOf(cur)+d+l.length)%l.length]); $(d>0?"#nx":"#pv").focus()}
+$$(".pr").forEach(b=>b.onclick=()=>{opener=b; show(+b.dataset.i); $("#dlg").showModal(); $("#dlg .x").focus()});
+$("#dlg").addEventListener("click",e=>{if(e.target.id==="dlg")$("#dlg").close()});
+$("#dlg").addEventListener("keydown",e=>{if(e.key==="ArrowRight")step(1); if(e.key==="ArrowLeft")step(-1)});
+$("#dlg").addEventListener("close",()=>opener?.focus());
+$$("#type button").forEach(b=>b.onclick=()=>$$("#type button").forEach(x=>x.setAttribute("aria-pressed",x===b)));
+$("#area").oninput=e=>$("#areaV").textContent=e.target.value+" m²";
+$("#form").onsubmit=e=>{e.preventDefault(); const F=e.target;
+  const nOk=F.name.value.trim().length>1, mOk=F.email.checkValidity();
+  F.name.setAttribute("aria-invalid",!nOk); F.email.setAttribute("aria-invalid",!mOk);
+  $("#eName").textContent=nOk?"":"Tell us your name."; $("#eMail").textContent=mOk?"":"Enter an email we can reply to.";
+  if(!nOk){F.name.focus();return} if(!mOk){F.email.focus();return}
+  const t=$("#type [aria-pressed=true]").textContent, a=$("#area").value, first=F.name.value.trim().split(" ")[0];
+  F.innerHTML=`<p class="sent" tabindex="-1">Thank you, ${first}. We will reply within two working days.</p><p class="sent-sum">${t} · about ${a} m² · reply to ${F.email.value}</p><p class="sent-sum">This is a demo, nothing was sent.</p>`;
+  F.querySelector(".sent").focus()};
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+$$(".reveal").forEach((el,i)=>{el.style.transitionDelay=(i%3)*90+"ms";io.observe(el)});
+
+(()=>{const h=document.querySelector("header"),m=document.querySelector(".mnu");if(!m)return;
+const set=o=>{h.classList.toggle("nav-open",o);m.setAttribute("aria-expanded",o)};
+m.onclick=()=>set(!h.classList.contains("nav-open"));
+document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>set(false)));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")set(false)});
+document.addEventListener("click",e=>{if(!h.contains(e.target))set(false)});})();
+</script>
+</body>
+</html>
