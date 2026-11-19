@@ -233,24 +233,24 @@ function house(o){
 const tree=(x,g,s=1)=>`<line class="ink" x1="${x}" y1="${g}" x2="${x}" y2="${g-60*s}"/><path class="ink" d="M${x-30*s},${g-50*s} q${30*s},-${80*s} ${60*s},0 q-${30*s},${18*s} -${60*s},0z"/>`;
 const svg=(inner,vb="0 0 700 420")=>`<svg viewBox="${vb}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${inner}</svg>`;
 const P=[
- {k:"lake",t:"Lake house",c:"var(--stone)",cat:"house",y:2025,a:"240 m²",loc:"Lake shore, 60 km north",w:true,d:"A long, low house set back from the water, with a covered terrace that runs the full length of the living room.",
+ {k:"lake",img:"lake.webp",t:"Lake house",c:"var(--stone)",cat:"house",y:2025,a:"240 m²",loc:"Lake shore, 60 km north",w:true,d:"A long, low house set back from the water, with a covered terrace that runs the full length of the living room.",
   g:house({w:520,h:130,roof:"flat",win:[[30,30,120,70],[170,30,200,100],[390,30,90,70]],extra:tree(640,330,1.1)+tree(50,330,.8)})},
- {k:"city",t:"City apartment",c:"var(--sky)",cat:"interior",y:2024,a:"118 m²",loc:"Old town, 4th floor",d:"Walls taken down to one oak-lined core with storage, kitchen and bathroom inside it.",
+ {k:"city",img:"city.webp",t:"City apartment",c:"var(--sky)",cat:"interior",y:2024,a:"118 m²",loc:"Old town, 4th floor",d:"Walls taken down to one oak-lined core with storage, kitchen and bathroom inside it.",
   g:`<rect class="ink" x="150" y="60" width="400" height="300"/><rect class="ink" x="280" y="140" width="140" height="140"/><line class="ink" x1="150" y1="210" x2="280" y2="210"/><line class="ink" x1="420" y1="210" x2="550" y2="210"/><line class="ink" x1="350" y1="60" x2="350" y2="140"/>`},
- {k:"studio",t:"Country studio",c:"var(--oak)",cat:"house",y:2023,a:"86 m²",loc:"Meadow plot, 90 km east",d:"A painter’s studio with one north-facing roof light and a sleeping loft.",
+ {k:"studio",img:"studio.webp",t:"Country studio",c:"var(--oak)",cat:"house",y:2023,a:"86 m²",loc:"Meadow plot, 90 km east",d:"A painter’s studio with one north-facing roof light and a sleeping loft.",
   g:house({x:200,w:300,h:150,roof:"pitch",win:[[40,60,60,90],[200,60,60,90]],extra:tree(110,330,.9)+tree(600,330,1.2)})},
- {k:"forest",w:true,t:"House on stilts",c:"var(--stone)",cat:"house",y:2022,a:"150 m²",loc:"Pine forest, slope",d:"Raised above a steep slope so no trees had to be cut. The deck faces the morning sun.",
+ {k:"forest",img:"forest.webp",w:true,t:"House on stilts",c:"var(--stone)",cat:"house",y:2022,a:"150 m²",loc:"Pine forest, slope",d:"Raised above a steep slope so no trees had to be cut. The deck faces the morning sun.",
   g:house({x:140,w:420,h:120,roof:"flat",stilt:true,win:[[30,30,160,60],[230,30,160,60]],extra:tree(70,330,1.3)+tree(630,330,1)})},
- {k:"loft",w:true,t:"Printworks loft",c:"var(--sky)",cat:"interior",y:2023,a:"210 m²",loc:"Former printworks",d:"An open loft kept industrial, with a glass box for the bedrooms in the middle.",
+ {k:"loft",img:"loft.webp",w:true,t:"Printworks loft",c:"var(--sky)",cat:"interior",y:2023,a:"210 m²",loc:"Former printworks",d:"An open loft kept industrial, with a glass box for the bedrooms in the middle.",
   g:`<rect class="ink" x="100" y="70" width="500" height="280"/><rect class="ink" x="240" y="150" width="220" height="120"/><line class="ink" x1="100" y1="120" x2="600" y2="120"/><line class="ink" x1="350" y1="150" x2="350" y2="270"/>`},
 
- {k:"lib",t:"Village library",c:"var(--moss)",cat:"public",y:2024,a:"420 m²",loc:"Village square",d:"A reading room under a single monopitch roof, with a porch that doubles as an outdoor stage.",
+ {k:"lib",img:"lib.webp",t:"Village library",c:"var(--moss)",cat:"public",y:2024,a:"420 m²",loc:"Village square",d:"A reading room under a single monopitch roof, with a porch that doubles as an outdoor stage.",
   g:house({x:110,w:460,h:140,roof:"mono",win:[[30,40,80,100],[140,40,80,100],[250,40,80,100],[360,40,70,100]]})},
 ];
 function drawHero(){ $("#hero").insertAdjacentHTML("afterbegin",svg(P[0].g)); $$("#hero .ink").forEach((el,i)=>{const l=Math.ceil(el.getTotalLength?el.getTotalLength():800);el.style.setProperty("--l",l);el.style.animationDelay=i*0.12+"s"}); }
 drawHero();
 const TYPE={house:"House",interior:"Apartment",public:"Public building"};
-$("#grid").innerHTML=P.map((p,i)=>`<button class="pr reveal ${p.w?"w":""}" data-i="${i}" data-cat="${p.cat}" style="--c:${p.c}" aria-label="${p.t}, ${p.loc}, ${p.y}. Open project"><div class="vis"><img src="${p.k}.webp" alt="" width="1600" height="1200" loading="lazy">${svg(p.g.replaceAll('class="ink"',''))}</div><div class="meta"><h3>${p.t}</h3><small>${p.loc.split(",")[0]} · ${p.y}</small></div></button>`).join("");
+$("#grid").innerHTML=P.map((p,i)=>`<button class="pr reveal ${p.w?"w":""}" data-i="${i}" data-cat="${p.cat}" style="--c:${p.c}" aria-label="${p.t}, ${p.loc}, ${p.y}. Open project"><div class="vis"><img src="${p.img}" alt="" width="1600" height="1200" loading="lazy">${svg(p.g.replaceAll('class="ink"',''))}</div><div class="meta"><h3>${p.t}</h3><small>${p.loc.split(",")[0]} · ${p.y}</small></div></button>`).join("");
 const setCount=n=>$("#count").textContent=`${n} ${n===1?"project":"projects"}`;
 setCount(P.length);
 $$(".fl button").forEach(b=>b.onclick=()=>{$$(".fl button").forEach(x=>x.setAttribute("aria-pressed",x===b));
@@ -261,7 +261,7 @@ const visible=()=>$$(".pr").filter(p=>!p.hidden).map(p=>+p.dataset.i);
 function show(i){
   cur=i; const p=P[i], list=visible(), pos=list.indexOf(i);
   $("#dlg").setAttribute("aria-label",p.t);
-  $("#dlg").innerHTML=`<div class="dg"><div class="vis" style="--c:${p.c}"><button class="x" aria-label="Close">×</button><img src="${p.k}.webp" alt="${p.t}, photo"></div><div class="tx"><p class="tag">${pos+1} / ${list.length} · ${TYPE[p.cat]==="Apartment"?"Interior":TYPE[p.cat]}</p><h3>${p.t}</h3>
+  $("#dlg").innerHTML=`<div class="dg"><div class="vis" style="--c:${p.c}"><button class="x" aria-label="Close">×</button><img src="${p.img}" alt="${p.t}, photo"></div><div class="tx"><p class="tag">${pos+1} / ${list.length} · ${TYPE[p.cat]==="Apartment"?"Interior":TYPE[p.cat]}</p><h3>${p.t}</h3>
    <dl><dt>Location</dt><dd>${p.loc}</dd><dt>Area</dt><dd>${p.a}</dd><dt>Completed</dt><dd>${p.y}</dd><dt>Team</dt><dd>3 architects</dd></dl><p>${p.d}</p>
    <div class="plan" style="--c:${p.c}" aria-label="Elevation drawing" role="img">${svg(p.g.replaceAll('class="ink"',''))}</div>
    <div class="nav"><button id="pv" aria-label="Previous project">← Previous</button><button id="nx" aria-label="Next project">Next →</button><button class="btn" id="sim">Discuss a similar project</button></div></div></div>`;
