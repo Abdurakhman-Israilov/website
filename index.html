@@ -526,6 +526,9 @@ dialog::backdrop{background:rgba(4,5,6,.8);backdrop-filter:blur(6px)}
   .chat-panel{width:calc(100vw - 24px);max-height:calc(100dvh - 96px)}
 }
 
+/* when the live chat is connected, hide the provider's own launcher: our button opens it */
+.chatw.live .chat-fab::after{background:#3ad16a}
+
 </style>
 </head>
 <body>
@@ -1237,6 +1240,7 @@ setLang(start, false);
 
 /* chat launcher: messages go to the visitor's own Telegram/WhatsApp/email app; nothing is sent to or stored by the site.
    Fill in usernames/numbers below; empty channels stay hidden. Manager falls back to the studio's email. */
+const JIVO_ID = "";
 const CHAT = {
   owner:   { telegram: CONTACT.telegram, whatsapp: CONTACT.whatsapp, email: CONTACT.email },
   manager: { telegram: "", whatsapp: "", email: "" }
@@ -1281,7 +1285,18 @@ const CHAT = {
     fab.setAttribute("aria-label", t(v ? "ch.close" : "ch.open"));
     if (v) { status.textContent = ""; render(); setTimeout(() => ta.focus(), 30); }
   }
-  fab.addEventListener("click", () => open(panel.hidden));
+  /* live chat (Jivo, data stored in Russia): when JIVO_ID is set, the same button opens the live chat window.
+     If Jivo fails to load, the messenger panel above still works. */
+  let live = false;
+  if (JIVO_ID) {
+    window.jivo_onLoadCallback = () => { live = true; w.classList.add("live"); };
+    window.jivo_onClose = () => { w.classList.remove("open"); fab.setAttribute("aria-expanded", "false"); };
+    const sc = document.createElement("script"); sc.src = "https://code.jivo.ru/widget/" + JIVO_ID; sc.async = true; document.body.appendChild(sc);
+  }
+  fab.addEventListener("click", () => {
+    if (live && window.jivo_api) { open(false); window.jivo_api.open(); return; }
+    open(panel.hidden);
+  });
   $("#chat-x").addEventListener("click", () => { open(false); fab.focus(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !panel.hidden) { open(false); fab.focus(); } });
   document.addEventListener("click", e => { if (!panel.hidden && !w.contains(e.target)) open(false); });
