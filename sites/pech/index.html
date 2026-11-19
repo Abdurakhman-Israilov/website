@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23d6461f'/><text x='32' y='44' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23fff'>P</text></svg>">
+<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Pech — wood-fired pizza, delivered in 30 minutes</title>
 <meta name="description" content="Sourdough pizza from a wood-fired oven, delivered across the city in 30 minutes.">
@@ -173,9 +174,14 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
   header.nav-open nav a{padding:14px 0;font-size:18px;border-bottom:1px solid var(--line)}
   header.nav-open nav a:last-child{border-bottom:0}
 }
+
+.demo-bar{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;gap:8px;padding:8px 16px;background:#1b1b1b;color:#f2f0ea;font:600 13px/1.35 system-ui,sans-serif;text-align:center}
+.demo-bar b{color:#ffd166}
 </style>
 </head>
 <body>
+<div class="demo-bar" role="note"><span><b>Demo website</b> made by Man’s Service. Orders, bookings and payments are switched off: nothing you type is sent or saved.</span></div>
+
 <header><div class="wrap hd">
   <a class="logo" href="#top"><i></i>PECH</a>
   <nav id="nav"><a href="#menu">Menu</a><a href="#delivery">Delivery</a><a href="#about">About</a></nav>
@@ -221,7 +227,7 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
       <div class="card">
         <h3>Do we deliver to you?</h3>
         <p>Enter your postcode. We cover 9 districts from two ovens.</p>
-        <form class="chk" id="zone"><input id="pc" placeholder="e.g. N1 7GU" aria-label="Postcode" autocomplete="postal-code"><button>Check</button></form>
+        <form class="chk" id="zone"><input id="pc" placeholder="e.g. N1 7GU" aria-label="Postcode" autocomplete="off"><button>Check</button></form>
         <div class="res" id="zoneRes" role="status"></div>
         <div class="steps"><div><b>1</b>Order online</div><div><b>2</b>90 s in the oven</div><div><b>3</b>At your door</div></div>
       </div>
@@ -257,6 +263,8 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
 <button class="mbask" id="mbask" aria-label="Open basket"><span>View basket · <b id="mcount">0</b></span><span id="mtotal">£0</span></button>
 
 <script>
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
 const MENU=[
  {id:1,cat:"pizza",n:"Margherita",d:"San Marzano tomato, fior di latte, basil, olive oil",p:10,img:"margherita.webp",tag:"Classic"},
  {id:2,cat:"pizza",n:"Pepperoni",d:"Tomato, mozzarella, spicy pepperoni, oregano",p:12,img:"pepperoni.webp",tag:"Best seller"},
@@ -334,27 +342,26 @@ function checkout(){
   const pc=$("#pc").value.trim().toUpperCase();
   $("#db").innerHTML=`<div class="summary-lines">${[...cart].map(([id,n])=>`<div><span>${n} × ${byId(id).n}</span><span>${money(n*byId(id).p)}</span></div>`).join("")}<div><span>Delivery</span><span>${fee(s)?money(fee(s)):"Free"}</span></div></div>
    <form class="co" id="co" novalidate>
-    <label>Name<input name="name" required autocomplete="name"></label>
-    <label>Phone<input name="tel" required type="tel" inputmode="tel" autocomplete="tel" pattern="[0-9+ ]{7,}" placeholder="+44 7700 900000"></label>
-    <label>Street address<input name="addr" required autocomplete="street-address"></label>
-    <label>Postcode<input name="pc" required autocomplete="postal-code" value="${pc}" placeholder="e.g. N1 7GU"></label>
+    <label>Name<input name="name" required autocomplete="off"></label>
+    <label>Phone<input name="tel" required type="tel" inputmode="tel" autocomplete="off" pattern="[0-9+ ]{7,}" placeholder="+44 7700 900000"></label>
+    <label>Street address<input name="addr" required autocomplete="off"></label>
+    <label>Postcode<input name="pc" required autocomplete="off" value="${esc(pc)}" placeholder="e.g. N1 7GU"></label>
     <label>Delivery time<select name="when"><option>As soon as possible (~30 min)</option><option>In 1 hour</option><option>In 2 hours</option></select></label>
-    <label>Payment<select name="pay"><option>Card on delivery</option><option>Cash</option></select></label>
-    <p class="err" id="coErr" role="alert"></p></form>`;
-  $("#df").innerHTML=`<div class="tot"><div class="big"><span>To pay</span><span>${money(s+fee(s))}</span></div></div><button class="cta" id="place">Place order · ${money(s+fee(s))}</button><button class="x" style="width:100%;margin-top:10px;font-size:15px;font-weight:800" id="back">Back to basket</button>`;
+        <p class="err" id="coErr" role="alert"></p></form>`;
+  $("#df").innerHTML=`<div class="tot"><div class="big"><span>Total</span><span>${money(s+fee(s))}</span></div></div><p style="font-size:13px;color:var(--muted);margin:8px 0 0">Demo: no order is placed and nothing is charged.</p><button class="cta" id="place">Place demo order</button><button class="x" style="width:100%;margin-top:10px;font-size:15px;font-weight:800" id="back">Back to basket</button>`;
   $("#back").onclick=()=>{step="cart";drawCart()};
   $("#place").onclick=()=>{
     const f=$("#co"), err=$("#coErr"); let bad=null;
     [...f.elements].forEach(i=>{if(!i.willValidate)return;const ok=i.checkValidity();i.setAttribute("aria-invalid",!ok);if(!ok&&!bad)bad=i});
     if(bad){err.textContent=bad.name==="tel"?"Enter a phone number we can call.":"Fill in your "+(bad.closest("label").firstChild.textContent.toLowerCase())+".";bad.focus();return}
-    if(!ZONE.test(f.pc.value.trim().toUpperCase())){f.pc.setAttribute("aria-invalid",true);err.textContent=`We do not deliver to ${f.pc.value.trim().toUpperCase()} yet. Covered: N, E, EC, WC, NW and SE.`;f.pc.focus();return}
+    if(!ZONE.test(f.pc.value.trim().toUpperCase())){f.pc.setAttribute("aria-invalid",true);err.textContent=`We do not deliver to ${esc(f.pc.value.trim().toUpperCase())} yet. Covered: N, E, EC, WC, NW and SE.`;f.pc.focus();return}
     confirmOrder(f.name.value.split(" ")[0], f.when.value);
   };
   $("#co input").focus();
 }
 function confirmOrder(name,when){
   step="done"; const no=Math.floor(1000+Math.random()*8999); const asap=when.startsWith("As soon");
-  $("#db").innerHTML=`<div class="done"><div class="big" aria-hidden="true">🍕</div><h4>Thanks ${name}, order #${no} is in</h4><p style="color:var(--muted);margin-top:6px">${asap?`Arriving in about <b id="eta">30</b> min.`:`Delivery ${when.toLowerCase()}.`} This is a demo, no order was placed.</p>
+  $("#db").innerHTML=`<div class="done"><div class="big" aria-hidden="true">🍕</div><h4>Thanks ${esc(name)}, demo order #${no} is in</h4><p style="color:var(--muted);margin-top:6px">${asap?`Arriving in about <b id="eta">30</b> min.`:`Delivery ${when.toLowerCase()}.`} This is a demo: no order was placed and nothing was charged.</p>
    <div class="track"><span class="on"><i></i>Accepted</span><span id="t2"><i></i>In the oven</span><span id="t3"><i></i>On the way</span></div></div>`;
   $("#df").innerHTML=`<button class="cta" id="again">Start a new order</button>`;
   if(asap){setTimeout(()=>$("#t2")?.classList.add("on"),1200); setTimeout(()=>{$("#t3")?.classList.add("on"); const e=$("#eta"); if(e) e.textContent="22";},3200);}

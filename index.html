@@ -922,7 +922,7 @@ const UI = {
         hello: "Здравствуйте!", name: "Меня зовут", need: "Нужно", task: "Задача", reach: "Связаться со мной",
         needs: { ad: "реклама и дизайн", web: "сайт" },
         ch: { phone: "Телефон", whatsapp: "WhatsApp", telegram: "Telegram", email: "Почта", instagram: "Instagram" },
-        none: "Контакты студии скоро появятся здесь", openWa: "Открыть WhatsApp", openTg: "Открыть Telegram",
+        none: "Контакты студии скоро появятся здесь", openWa: "Открыть WhatsApp", openTg: "Открыть Telegram", openMail: "Отправить на почту", mailSubj: "Заявка с сайта Man’s Service",
         desc: "Man’s Service: наружная и интерьерная реклама, вывески и сайты.",
         readyNoContact: "Сообщение готово. Скопируйте его: контакты студии скоро появятся на этой странице.",
         caseNote: "Концепт для вымышленного бренда. Совпадения с существующими компаниями случайны." },
@@ -930,7 +930,7 @@ const UI = {
         hello: "Hello!", name: "My name is", need: "I need", task: "Project", reach: "Reach me at",
         needs: { ad: "advertising and design", web: "a website" },
         ch: { phone: "Phone", whatsapp: "WhatsApp", telegram: "Telegram", email: "Email", instagram: "Instagram" },
-        none: "Studio contact details will appear here soon", openWa: "Open WhatsApp", openTg: "Open Telegram",
+        none: "Studio contact details will appear here soon", openWa: "Open WhatsApp", openTg: "Open Telegram", openMail: "Send by email", mailSubj: "Project enquiry from the Man’s Service site",
         desc: "Man’s Service: outdoor and indoor advertising, signage and websites.",
         readyNoContact: "Your message is ready. Copy it: studio contact details will appear on this page soon.",
         caseNote: "A concept for an invented brand. Any resemblance to existing companies is coincidental." }
@@ -1099,11 +1099,12 @@ function compose() {
   $$("#result-actions a").forEach(a => a.remove());
   const add = (label, href) => {
     const a = document.createElement("a");
-    a.className = "btn btn-light"; a.textContent = label; a.href = href; a.target = "_blank"; a.rel = "noopener";
+    a.className = "btn btn-light"; a.textContent = label; a.href = href; if (href.startsWith("http")) { a.target = "_blank"; a.rel = "noopener"; }
     $("#result-actions").insertBefore(a, $("#copy-status"));
   };
   if (CONTACT.whatsapp) add(u.openWa, "https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(text));
   if (CONTACT.telegram) add(u.openTg, "https://t.me/" + CONTACT.telegram);
+  if (CONTACT.email) add(u.openMail, "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent(u.mailSubj) + "&body=" + encodeURIComponent(text));
   const hint = $("#result .hint[data-i18n='fm.ready']");
   if (hint) hint.textContent = channelList().length ? t("fm.ready") : u.readyNoContact;
   $("#result").hidden = false;

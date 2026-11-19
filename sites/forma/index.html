@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23161616'/><text x='32' y='44' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23f4f2ee'>F</text></svg>">
+<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Forma — architecture bureau</title>
 <meta name="description" content="Forma designs private houses, apartments and small public buildings.">
@@ -148,9 +149,14 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
   header.nav-open nav a{padding:14px 0;font-size:18px;border-bottom:1px solid var(--line)}
   header.nav-open nav a:last-child{border-bottom:0}
 }
+
+.demo-bar{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;gap:8px;padding:8px 16px;background:#1b1b1b;color:#f2f0ea;font:600 13px/1.35 system-ui,sans-serif;text-align:center}
+.demo-bar b{color:#ffd166}
 </style>
 </head>
 <body>
+<div class="demo-bar" role="note"><span><b>Demo website</b> made by Man’s Service. Orders, bookings and payments are switched off: nothing you type is sent or saved.</span></div>
+
 <header><div class="wrap hd">
   <a class="logo" href="#top">Forma</a>
   <nav id="nav"><a href="#projects">Projects</a><a href="#process">Process</a><a href="#enquiry">Enquiry</a></nav>
@@ -195,8 +201,8 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
       <form id="form" novalidate>
         <label>PROJECT TYPE<div class="choices" id="type" role="group" aria-label="Project type"><button type="button" aria-pressed="true">House</button><button type="button" aria-pressed="false">Apartment</button><button type="button" aria-pressed="false">Renovation</button><button type="button" aria-pressed="false">Public building</button></div></label>
         <label>FLOOR AREA<input type="range" min="40" max="800" step="10" value="220" id="area"><span class="rv"><span id="areaV">220 m²</span><span>approximate</span></span></label>
-        <label>NAME<input type="text" name="name" required autocomplete="name"><span class="err" id="eName"></span></label>
-        <label>EMAIL<input type="email" name="email" required autocomplete="email"><span class="err" id="eMail"></span></label>
+        <label>NAME<input type="text" name="name" required autocomplete="off"><span class="err" id="eName"></span></label>
+        <label>EMAIL<input type="email" name="email" required autocomplete="off"><span class="err" id="eMail"></span></label>
         <label>ABOUT THE SITE<textarea name="about" rows="3" placeholder="Location, size, what is there now"></textarea></label>
         <button class="btn">Send enquiry</button>
       </form>
@@ -208,6 +214,8 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
 <dialog id="dlg"></dialog>
 
 <script>
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 /* line drawings, generated from a few parameters */
 function house(o){
@@ -277,7 +285,7 @@ $("#form").onsubmit=e=>{e.preventDefault(); const F=e.target;
   $("#eName").textContent=nOk?"":"Tell us your name."; $("#eMail").textContent=mOk?"":"Enter an email we can reply to.";
   if(!nOk){F.name.focus();return} if(!mOk){F.email.focus();return}
   const t=$("#type [aria-pressed=true]").textContent, a=$("#area").value, first=F.name.value.trim().split(" ")[0];
-  F.innerHTML=`<p class="sent" tabindex="-1">Thank you, ${first}. We will reply within two working days.</p><p class="sent-sum">${t} · about ${a} m² · reply to ${F.email.value}</p><p class="sent-sum">This is a demo, nothing was sent.</p>`;
+  F.innerHTML=`<p class="sent" tabindex="-1">Thank you, ${esc(first)}. In a real project we would reply within two working days.</p><p class="sent-sum">${t} · about ${a} m² · reply to ${esc(F.email.value)}</p><p class="sent-sum">This is a demo: nothing was sent or saved.</p>`;
   F.querySelector(".sent").focus()};
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
 $$(".reveal").forEach((el,i)=>{el.style.transitionDelay=(i%3)*90+"ms";io.observe(el)});

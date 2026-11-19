@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232bb3a0'/><text x='32' y='44' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23fff'>U</text></svg>">
+<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ulybka dental clinic — book in three taps</title>
 <meta name="description" content="Check-ups, cleaning, fillings and implants. Book a visit in three taps.">
@@ -144,13 +145,18 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
   header.nav-open nav a{padding:14px 0;font-size:18px;border-bottom:1px solid var(--line)}
   header.nav-open nav a:last-child{border-bottom:0}
 }
+
+.demo-bar{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;gap:8px;padding:8px 16px;background:#1b1b1b;color:#f2f0ea;font:600 13px/1.35 system-ui,sans-serif;text-align:center}
+.demo-bar b{color:#ffd166}
 </style>
 </head>
 <body>
+<div class="demo-bar" role="note"><span><b>Demo website</b> made by Man’s Service. Orders, bookings and payments are switched off: nothing you type is sent or saved.</span></div>
+
 <header><div class="wrap hd">
   <a class="logo" href="#top"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="12" fill="#2bb3a0"/><path d="M11 18c2 8 16 8 18 0" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round"/></svg>Ulybka</a>
   <nav id="nav"><a href="#services">Services and prices</a><a href="#doctors">Doctors</a><a href="#where">Address</a></nav>
-  <a class="call" href="tel:+440000000000">+44 20 0000 0000</a>
+  <span class="call">+44 20 0000 0000</span>
   <button class="mnu" aria-label="Menu" aria-expanded="false" aria-controls="nav"><i></i></button>
 </div></header>
 
@@ -206,9 +212,11 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
   </section>
 </main>
 <footer><div class="wrap"><span>Ulybka dental clinic</span><span>Concept website by Man’s Service. The clinic and reviews are invented.</span></div></footer>
-<div class="mbar" id="mbar"><a class="btn" href="#book">Book a visit</a><a class="btn ph" href="tel:+440000000000" aria-label="Call the clinic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></a></div>
+<div class="mbar" id="mbar"><a class="btn" href="#book">Book a visit</a></div>
 
 <script>
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const SV=[["Check-up and X-ray","30 min","£45"],["Hygiene and cleaning","45 min","£70"],["Filling","60 min","from £90"],["Implant consultation","30 min","Free"],["Whitening","60 min","£290"],["Children’s check-up","30 min","£35"]];
 const DOC=[{n:"Dr Anna Kovacs",s:[0,2,4,5]},{n:"Dr Tom Becker",s:[0,2,3]},{n:"Lena Moss",s:[1,4]}];
@@ -253,8 +261,8 @@ function render(){
     const d=fmt(days[st.day],{weekday:"long",day:"numeric",month:"long"});
     const who=st.doc!=null?DOC[st.doc].n:docsFor(st.svc)[0].n;
     b.innerHTML=`<h2 tabindex="-1">Almost done</h2>${prog}<div class="summary"><b>${SV[st.svc][0]} · ${SV[st.svc][2]}</b>${d}, ${st.time}<br><span style="color:var(--soft)">${st.doc!=null?"With ":"Likely with "}${who}</span></div>
-     <form id="f" novalidate><label class="field">Your name<input name="n" required autocomplete="name" value="${st.name}"><span class="err" id="eN"></span></label><label class="field">Mobile for the SMS<input name="t" required type="tel" inputmode="tel" autocomplete="tel" placeholder="+44 7700 900000" value="${st.tel}"><span class="err" id="eT"></span></label>
-     <div class="nav"><button type="button" class="back" id="bk">Back</button><button class="btn">Confirm booking</button></div></form>`;
+     <form id="f" novalidate><label class="field">Your name<input name="n" required autocomplete="off" value="${esc(st.name)}"><span class="err" id="eN"></span></label><label class="field">Mobile for the SMS<input name="t" required type="tel" inputmode="tel" autocomplete="off" placeholder="+44 7700 900000" value="${esc(st.tel)}"><span class="err" id="eT"></span></label>
+     <div class="nav"><button type="button" class="back" id="bk">Back</button><button class="btn">Confirm demo booking</button></div></form>`;
     $("#bk").onclick=()=>{st.step=1;go()};
     $("#f").onsubmit=e=>{e.preventDefault();const F=e.target;
       const nOk=F.n.value.trim().length>1, tOk=F.t.value.replace(/\D/g,"").length>=7;
@@ -266,8 +274,8 @@ function render(){
     const d=fmt(days[st.day],{weekday:"short",day:"numeric",month:"short"});
     const first=st.name.split(" ")[0]||"there";
     b.innerHTML=`<div class="done"><div class="ck"><svg viewBox="0 0 36 36"><path d="M9 19l6 6 12-13"/></svg></div><h2 tabindex="-1">You are booked</h2><p style="color:var(--soft)">${SV[st.svc][0]} · ${d} · ${st.time}</p></div>
-     <div class="sms"><small>SMS to ${st.tel}</small>Hi ${first}, see you ${d} at ${st.time}, 7 Garden Row, 2nd floor. Reply 1 to confirm, 2 to reschedule.</div>
-     <p style="font-size:13px;color:var(--soft);margin-top:14px">This is a demo. No booking was made and no SMS was sent.</p>
+     <div class="sms"><small>Example SMS (not sent)</small>Hi ${esc(first)}, see you ${d} at ${st.time}, 7 Garden Row, 2nd floor. Reply 1 to confirm, 2 to reschedule.</div>
+     <p style="font-size:13px;color:var(--soft);margin-top:14px">This is a demo: no booking was made, no SMS was sent and nothing was saved.</p>
      <div class="nav"><button class="back" id="ics" style="flex:1">Add to calendar</button><button class="back" id="again" style="flex:1">Book another</button></div>`;
     $("#again").onclick=()=>{Object.assign(st,{step:0,svc:null,day:0,time:null,doc:null});go()};
     $("#ics").onclick=()=>{const dd=days[st.day],[h,m]=st.time.split(":").map(Number);const s0=new Date(dd);s0.setHours(h,m);const e0=new Date(s0.getTime()+parseInt(SV[st.svc][1])*60000);

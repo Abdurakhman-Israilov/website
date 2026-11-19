@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2355704f'/><text x='32' y='44' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23f6f1e8'>S</text></svg>">
+<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Stillpoint Studio — yoga and pilates, seven days a week</title>
 <meta name="description" content="Yoga and pilates classes for every level. Your first class is free.">
@@ -169,9 +170,14 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
   header.nav-open nav a{padding:14px 0;font-size:18px;border-bottom:1px solid var(--line)}
   header.nav-open nav a:last-child{border-bottom:0}
 }
+
+.demo-bar{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;gap:8px;padding:8px 16px;background:#1b1b1b;color:#f2f0ea;font:600 13px/1.35 system-ui,sans-serif;text-align:center}
+.demo-bar b{color:#ffd166}
 </style>
 </head>
 <body>
+<div class="demo-bar" role="note"><span><b>Demo website</b> made by Man’s Service. Orders, bookings and payments are switched off: nothing you type is sent or saved.</span></div>
+
 <header><div class="wrap hd">
   <a class="logo" href="#top"><b>STILLPOINT</b><small>STUDIO</small></a>
   <nav id="nav"><a href="#classes">Classes</a><a href="#timetable">Timetable</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></nav>
@@ -250,6 +256,8 @@ header.nav-open .mnu i{background:transparent}header.nav-open .mnu i::before{tra
 </dialog>
 
 <script>
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const T={Vinyasa:"Vinyasa Flow",Yin:"Yin Yoga",Ref:"Reformer Pilates"};
 const BASE=[["07:00",T.Vinyasa,"Maya Hart",60,"All levels",12],["09:30",T.Ref,"Sofia Lind",50,"Beginner",6],["12:15",T.Yin,"Daniel Cho",45,"All levels",12],["17:45",T.Vinyasa,"Rosa Mendes",60,"Beginner",12],["19:00",T.Ref,"Sofia Lind",50,"Intermediate",6],["20:15",T.Yin,"Daniel Cho",75,"All levels",12]];
@@ -261,7 +269,7 @@ const key=(d,i)=>iso(days[d])+"#"+i;
 let day=0,f="all",teacher=null;
 let mine={}; try{mine=JSON.parse(localStorage.getItem("sp-bookings")||"{}")}catch(e){}
 const persist=()=>{try{localStorage.setItem("sp-bookings",JSON.stringify(mine))}catch(e){}};
-let me={}; try{me=JSON.parse(localStorage.getItem("sp-me")||"{}")}catch(e){}
+let me={}; try{localStorage.removeItem("sp-me")}catch(e){}
 const taken=(d,i)=>((days[d].getDate()*7+i*13)%9);
 const fmt=(d,o)=>d.toLocaleDateString("en-GB",o);
 $("#days").innerHTML=days.map((d,i)=>`<button role="tab" aria-selected="${i===0}" tabindex="${i?-1:0}" data-d="${i}" aria-label="${fmt(d,{weekday:"long",day:"numeric",month:"long"})}">${i===0?"Today":fmt(d,{weekday:"short"})}<b>${d.getDate()}</b></button>`).join("");
@@ -307,16 +315,16 @@ function open(i){
   const wait=!left;
   $("#bkT").textContent=wait?"Join the waitlist":"Book a spot";
   $("#bkB").innerHTML=`<div class="sum"><b>${c[1]}</b>${when}</div>
-   <form id="bf" novalidate><label>Name<input name="n" required autocomplete="name" value="${me.n||""}"></label><label>Email<input name="e" required type="email" autocomplete="email" value="${me.e||""}"></label>
+   <form id="bf" novalidate><label>Name<input name="n" required autocomplete="off" value=""></label><label>Email<input name="e" required type="email" autocomplete="off" value=""></label>
    ${wait?`<p class="offer" style="color:var(--soft)">This class is full. We will email you if a spot opens.</p>`:`<p class="offer">✓ First class free. No card needed.</p>`}
-   <p class="err" id="bfErr" role="alert"></p><button class="btn">${wait?"Join waitlist":"Confirm booking"}</button></form>`;
+   <p class="err" id="bfErr" role="alert"></p><button class="btn">${wait?"Join demo waitlist":"Confirm demo booking"}</button></form>`;
   $("#bf").onsubmit=e=>{e.preventDefault(); const F=e.target; let bad=null;
     [F.n,F.e].forEach(x=>{const ok=x.checkValidity();x.setAttribute("aria-invalid",!ok);if(!ok&&!bad)bad=x});
     if(bad){$("#bfErr").textContent=bad===F.e?"Enter a valid email address.":"Enter your name.";bad.focus();return}
-    me={n:F.n.value,e:F.e.value};try{localStorage.setItem("sp-me",JSON.stringify(me))}catch(e){}
+    me={n:F.n.value,e:F.e.value};
     mine[k]=wait?"wait":"booked";persist();draw();
     $("#bkT").textContent=wait?"You are on the list":"Booked";
-    $("#bkB").innerHTML=`<div class="ok"><div class="c">✓</div><h4>${wait?"You are on the waitlist":"See you on the mat"}</h4><p>${c[1]}, ${fmt(d,{weekday:"long"})} ${c[0]}. ${wait?"We will email "+me.e+" if a spot opens.":"Arrive ten minutes early."} This is a demo, nothing was booked.</p><button class="btn" style="margin-top:20px" id="okD">Done</button></div>`;
+    $("#bkB").innerHTML=`<div class="ok"><div class="c">✓</div><h4>${wait?"You are on the waitlist":"See you on the mat"}</h4><p>${c[1]}, ${fmt(d,{weekday:"long"})} ${c[0]}. ${wait?"We would email you if a spot opens.":"Arrive ten minutes early."} This is a demo: nothing was booked and no email was sent.</p><button class="btn" style="margin-top:20px" id="okD">Done</button></div>`;
     $("#okD").onclick=()=>$("#book").close(); $("#okD").focus();
   };
   $("#book").showModal(); setTimeout(()=>$("#bf input").focus(),30);
