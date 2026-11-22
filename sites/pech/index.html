@@ -330,7 +330,7 @@ function update(){
 function drawCart(){
   const s=sub(), f=fee(s);
   $("#db").innerHTML=cart.size?[...cart].map(([id,n])=>{const m=byId(id);return `<div class="line"><img src="${m.img}" alt=""><div><b>${m.n}</b><small>${n} × ${money(m.p)} = ${money(n*m.p)}</small></div><div class="qty"><button data-q="-1" data-id="${id}" aria-label="Remove one ${m.n}">−</button><span>${n}</span><button data-q="1" data-id="${id}" aria-label="Add one ${m.n}">+</button></div></div>`}).join("")
-    :`<p class="empty">Your basket is empty.<br>Pick a pizza from the menu.</p><button class="cta" style="margin:0 auto;display:flex" data-close onclick="document.getElementById('menu').scrollIntoView()">Browse the menu</button>`;
+    :`<p class="empty">Your basket is empty.<br>Pick a pizza from the menu.</p><button class="cta" style="margin:0 auto;display:flex" data-close data-goto-menu>Browse the menu</button>`;
   const left=Math.max(0,FREE-s);
   $("#df").innerHTML=cart.size?`<small>${left?`Add ${money(left)} more for free delivery`:"Free delivery unlocked"}</small><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${FREE}" aria-valuenow="${Math.min(FREE,s)}"><i style="width:${Math.min(100,s/FREE*100)}%"></i></div>
     <div class="tot"><div><span>Subtotal</span><span>${money(s)}</span></div><div><span>Delivery</span><span>${f?money(f):"Free"}</span></div><div class="big"><span>Total</span><span>${money(s+f)}</span></div></div>
@@ -397,6 +397,7 @@ m.onclick=()=>set(!h.classList.contains("nav-open"));
 document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>set(false)));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")set(false)});
 document.addEventListener("click",e=>{if(!h.contains(e.target))set(false)});})();
+document.addEventListener("click",e=>{if(e.target.closest("[data-goto-menu]"))document.getElementById("menu").scrollIntoView()});
 </script>
 </body>
 </html>
