@@ -297,7 +297,7 @@ function draw(){
     :`<p class="none">No ${teacher?teacher.split(" ")[0]+"’s ":""}classes match this filter on ${day?fmt(days[day],{weekday:"long"}):"today"}. Try another day.</p>`);
   $$(".slot .btn").forEach(b=>b.onclick=()=>open(+b.dataset.i));
   const c=$("#clrT"); if(c) c.onclick=()=>{teacher=null;draw()};
-  const ks=Object.keys(mine).filter(k=>mine[k]==="booked"&&fromIso(k.slice(0,10))>=today).sort();
+  const ks=Object.keys(mine).filter(k=>mine[k]==="booked"&&/^\d{4}-\d{2}-\d{2}#\d+$/.test(k)&&BASE[+k.split("#")[1]]&&fromIso(k.slice(0,10))>=today).sort();
   $("#mybk").classList.toggle("show",ks.length>0);
   $("#mybk").innerHTML=ks.length?`<b>Your bookings</b><br>`+ks.map(k=>{const c=BASE[+k.split("#")[1]];return `${fmt(fromIso(k.slice(0,10)),{weekday:"short",day:"numeric",month:"short"})} · ${c[0]} · ${c[1]}`}).join("<br>"):"";
 }
