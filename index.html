@@ -583,6 +583,13 @@ dialog::backdrop{background:rgba(4,5,6,.8);backdrop-filter:blur(6px)}
 .ftr-cols a,.ftr-contacts a,.ftr-contacts span{display:inline-block;padding-block:5px}
 /* 10. phones: hero buttons share one width */
 @media (max-width:560px){.hero .actions{display:grid;grid-template-columns:1fr;gap:10px;max-width:420px}.hero .actions .btn{width:100%}}
+/* 11. touch: comfortable tap targets for small text links and the language switch */
+@media (pointer:coarse){
+  .lang button{height:36px;min-width:42px}
+  .link{padding-block:9px 6px}
+  .ftr-bottom a,.ftr-cols a,.ftr-contacts a{display:inline-block;padding-block:10px}
+  .channels li{padding:6px 0}.channels a{display:inline-block;padding-block:10px}
+}
 
 </style>
 </head>
