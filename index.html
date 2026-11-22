@@ -531,6 +531,59 @@ dialog::backdrop{background:rgba(4,5,6,.8);backdrop-filter:blur(6px)}
 /* when the live chat is connected, hide the provider's own launcher: our button opens it */
 .chatw.live .chat-fab::after{background:#3ad16a}
 
+/* ===== design pass: consistency + brand polish ===== */
+/* 1. brand mark: every main headline ends with the logo's lime square, like the dot in the M */
+.hero h1::after,main h2:not(dialog *)::after{content:"";display:inline-block;width:.15em;height:.15em;margin-left:.07em;background:var(--accent);vertical-align:baseline}
+.theme-dark main h2::after,main .theme-dark h2::after{box-shadow:none}
+
+/* 2. featured work fills its two rows, no empty gap under it */
+@media (min-width:1061px){
+  .card.feat .m{aspect-ratio:auto;flex:1 1 auto;min-height:340px}
+}
+
+/* 3. hero slide labels: never overlap on phones */
+.reel-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+.reel-nav button{min-width:0;overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+@media (max-width:560px){.reel-nav{gap:8px}.reel-nav button{font-size:12px;line-height:1.25}}
+
+/* 4. loading photos show a calm placeholder instead of flat white */
+.fmt img,.svc-media img{background:linear-gradient(100deg,var(--surface-2) 30%,var(--surface) 50%,var(--surface-2) 70%) 0 0/300% 100%}
+@media (prefers-reduced-motion:no-preference){.fmt img:not([src]){animation:shim 1.6s ease-in-out infinite}}
+@keyframes shim{to{background-position:-150% 0}}
+
+/* 5. one control language: same radius, same height, same focus ring */
+.btn,.lang,.burger,.filters button,.checks span,.case-top button,.tag,.rail-head h3 em{border-radius:var(--r-sm)}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+.theme-dark :focus-visible{outline-color:var(--accent)}
+.btn-light:hover,.btn-line:hover{transform:translateY(-1px)}
+.btn-light{box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.btn-light:hover{box-shadow:0 8px 20px -10px rgba(0,0,0,.45)}
+@media (prefers-reduced-motion:reduce){.btn-light:hover,.btn-line:hover{transform:none}}
+
+/* 6. forms: fields read as inputs on the paper card, with a clear focus state */
+.form input[type=text],.form textarea{background:#fbfbfa;border-color:var(--line-2)}
+.form input[type=text]:hover,.form textarea:hover{border-color:var(--soft)}
+.form input[type=text]:focus,.form textarea:focus{border-color:var(--text);box-shadow:0 0 0 3px rgba(184,240,58,.55);outline:none}
+.checks input:checked+span{border-color:var(--text);color:var(--text);box-shadow:inset 0 0 0 1px var(--text)}
+
+/* 7. process: numbered steps read as a sequence */
+.steps{counter-reset:none}
+.steps li{position:relative;transition:border-color .25s,transform .25s}
+.steps li:hover{border-color:var(--line-2)}
+.steps .num{display:inline-flex;align-items:center;gap:8px;color:var(--text)}
+.steps .num::before{content:"";width:8px;height:8px;background:var(--accent);box-shadow:0 0 0 1px rgba(18,20,22,.25)}
+.steps h3{margin-top:28px}
+
+/* 8. work captions: hover state mirrors the card zoom */
+.card-cap h3{transition:color .2s}
+.card:hover .card-cap h3{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:5px}
+
+/* 9. footer lists: equal rhythm in every column */
+.ftr-cols ul{gap:2px}
+.ftr-cols a,.ftr-contacts a,.ftr-contacts span{display:inline-block;padding-block:5px}
+/* 10. phones: hero buttons share one width */
+@media (max-width:560px){.hero .actions{display:grid;grid-template-columns:1fr;gap:10px;max-width:420px}.hero .actions .btn{width:100%}}
+
 </style>
 </head>
 <body>
@@ -943,7 +996,7 @@ dialog::backdrop{background:rgba(4,5,6,.8);backdrop-filter:blur(6px)}
       <div><h3 data-i18n="ft.sec">Разделы</h3>
         <ul><li><a href="#services" data-i18n="nav.services">Услуги</a></li><li><a href="#formats" data-i18n="nav.formats">Форматы</a></li><li><a href="#work" data-i18n="nav.work">Работы</a></li><li><a href="#process" data-i18n="nav.process">Как работаем</a></li></ul></div>
       <div><h3 data-i18n="ft.svc">Услуги</h3>
-        <ul><li data-i18n="s1.t">Реклама и дизайн</li><li data-i18n="s2.t">Сайты</li></ul></div>
+        <ul><li><a href="#services" data-i18n="s1.t">Реклама и дизайн</a></li><li><a href="#services" data-i18n="s2.t">Сайты</a></li></ul></div>
       <div><h3 data-i18n="ft.ct">Контакты</h3>
         <ul class="ftr-contacts" id="ftr-contacts"></ul></div>
     </div>
