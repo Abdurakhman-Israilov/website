@@ -590,6 +590,7 @@ dialog::backdrop{background:rgba(4,5,6,.8);backdrop-filter:blur(6px)}
   .ftr-bottom a,.ftr-cols a,.ftr-contacts a{display:inline-block;padding-block:10px}
   .channels li{padding:6px 0}.channels a{display:inline-block;padding-block:10px}
 }
+.chatw[hidden]{display:none}
 
 </style>
 </head>
@@ -1313,7 +1314,7 @@ setLang(start, false);
 
 /* chat launcher: messages go to the visitor's own Telegram/WhatsApp/email app; nothing is sent to or stored by the site.
    Fill in usernames/numbers below; empty channels stay hidden. Manager falls back to the studio's email. */
-const JIVO_ID = "";
+const JIVO_ID = "JpvHkNoZVw";
 const CHAT = {
   owner:   { telegram: CONTACT.telegram, whatsapp: CONTACT.whatsapp, email: CONTACT.email },
   manager: { telegram: "", whatsapp: "", email: "" }
@@ -1362,9 +1363,10 @@ const CHAT = {
      If Jivo fails to load, the messenger panel above still works. */
   let live = false;
   if (JIVO_ID) {
-    window.jivo_onLoadCallback = () => { live = true; w.classList.add("live"); };
+    /* once Jivo's own chat button is on the page, hide ours so there is only one chat in the corner */
+    window.jivo_onLoadCallback = () => { live = true; open(false); w.hidden = true; };
     window.jivo_onClose = () => { w.classList.remove("open"); fab.setAttribute("aria-expanded", "false"); };
-    const sc = document.createElement("script"); sc.src = "https://code.jivo.ru/widget/" + JIVO_ID; sc.async = true; document.body.appendChild(sc);
+    const sc = document.createElement("script"); sc.src = "https://code.jivosite.com/widget/" + JIVO_ID; sc.async = true; document.body.appendChild(sc);
   }
   fab.addEventListener("click", () => {
     if (live && window.jivo_api) { open(false); window.jivo_api.open(); return; }
